@@ -29,8 +29,7 @@ class OrderItem:
         return tuple((
             self.order_item_id,
             self.order_id,
-            product.name+" "+product.brand+" "+f"({self.product_id})",
-            # self.product_id,
+            product.name+" "+product.brand,
             self.quantity,
             self.price,
             self.discount,

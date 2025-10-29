@@ -10,14 +10,14 @@ class DeliveryView:
         self.window.title("Delivery")
 
         self.delivery_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
-        self.first_name = LabelWithEntry(self.window, "FirstName", 20, 60)
-        self.last_name = LabelWithEntry(self.window, "LastName", 20, 100)
+        self.first_name = LabelWithEntry(self.window, "First Name", 20, 60)
+        self.last_name = LabelWithEntry(self.window, "Last Name", 20, 100)
         self.address = LabelWithEntry(self.window, "Address", 20, 140)
         self.description = LabelWithEntry(self.window, "Description", 20, 180)
 
         self.table = Table(
             self.window,
-            ["Id", "first_name", "last_name", "address", "description"],
+            ["Id", "First Name", "Last Name", "Address", "Description"],
             [40, 100, 100, 100, 100],
             275, 20,
             12,
@@ -27,6 +27,7 @@ class DeliveryView:
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=260)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=260)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=260)
+
         self.reset_form()
         self.window.mainloop()
 
@@ -39,9 +40,8 @@ class DeliveryView:
         else:
             messagebox.showerror("Delivery Save Error", message)
 
-
     def edit_click(self):
-        status, message = DeliveryController.update( self.delivery_id.get(), self.first_name.get(), self.last_name.get(),
+        status, message = DeliveryController.update(self.delivery_id.get(), self.first_name.get(), self.last_name.get(),
                                                         self.address.get(), self.description.get())
         if status:
             messagebox.showinfo("Delivery Update", message)
@@ -56,7 +56,6 @@ class DeliveryView:
             self.reset_form()
         else:
             messagebox.showerror("Delivery Delete Error", message)
-
 
     def reset_form(self):
         self.delivery_id.clear()

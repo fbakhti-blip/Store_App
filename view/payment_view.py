@@ -20,19 +20,22 @@ class PaymentView:
         self.total_amount = LabelWithEntry(self.window, "TotalAmount", 20, 220, data_type=IntVar)
         self.employee_id = LabelWithEntry(self.window, "Employee", 20, 260, data_type=IntVar, state="readonly", on_keypress_function=lambda : EmployeeView())
         self.description = LabelWithEntry(self.window, "Description", 20, 300)
+
         self.table = Table(
             self.window,
-            ["Id","TransactType", "PaymentType", "DateTime", "CustomerId","TotalAmount","EmployeeId", "Description"],
-            [40,80,60,100,130,80,130,180],
+            ["Id", "TransactType", "PaymentType", "DateTime", "Customer", "TotalAmount", "Employee", "Description"],
+            [40,80,80,100,130,80,130,160],
             270,20,
             18,
             self.select_from_table
         )
+
         Button(self.window, text="Select Payment", width=19, command=self.select_payment).place(x=20, y=340)
         Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=340)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=380)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=380)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=380)
+
         self.reset_form()
         self.window.mainloop()
 

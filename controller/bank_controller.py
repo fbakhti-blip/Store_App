@@ -39,7 +39,7 @@ class BankController:
             return False, e
 
     @staticmethod
-    def find_all(cls):
+    def find_all():
         try:
             bank_list = BankService.find_all()
             Logger.info("Bank FindAll")

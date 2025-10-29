@@ -1,5 +1,4 @@
-from tools.customer_validator import first_name_validator, last_name_validator, phone_number_validator, \
-    address_validator
+from tools.customer_validator import *
 
 
 class Customer:

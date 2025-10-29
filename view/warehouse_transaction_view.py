@@ -6,41 +6,42 @@ from controller import WarehouseTransactionController
 class WarehouseTransactionView:
     def __init__(self):
         self.window = Tk()
-        self.window.geometry("1000x400")
+        self.window.geometry("970x400")
         self.window.title("Warehouse Transaction")
 
-        self.warehouse_transaction_id = LabelWithEntry(self.window, "Id", 30, 20, data_type=IntVar, state="readonly")
-        self.product_id = LabelWithEntry(self.window, "product Id", 30, 60)
-        self.quantity = LabelWithEntry(self.window, "quantity", 30, 100)
+        self.warehouse_transaction_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly", distance=100)
+        self.product_id = LabelWithEntry(self.window, "Product Id", 20, 60, distance=100)
+        self.quantity = LabelWithEntry(self.window, "Quantity", 20, 100, distance=100)
+        self.transaction_datetime = LabelWithEntry(self.window, "Transaction Date", 20, 180, distance=100)
+        self.customer_id = LabelWithEntry(self.window, "Customer Id", 20, 220, distance=100)
+        self.employee_id = LabelWithEntry(self.window, "Employee Id", 20, 260, distance=100)
 
-        self.transaction_datetime = LabelWithEntry(self.window, "transaction datetime", 30, 180)
-        self.customer_id = LabelWithEntry(self.window, "customer_id", 30, 220)
-        self.employee_id = LabelWithEntry(self.window, "employee_id", 30, 260)
-
-        transaction_type_list = ["get", "receive"]
-        transaction_type = StringVar(value="get")
-        Label(self.window, text="transaction type").place(x=30, y=140)
+        transaction_type_list = ["Get", "Receive"]
+        type_transaction = StringVar(value="Get")
+        Label(self.window, text="Transaction Type").place(x=20, y=140)
         self.transaction_type = Combobox(
             self.window,
             values=transaction_type_list,
-            textvariable=transaction_type,
+            textvariable=type_transaction,
             width=17,
             state="readonly")
         self.transaction_type.place(x=120, y=140)
+
         self.table = Table(
             self.window,
             ["Id", "Product_Id", "Quantity", "transaction_type", "transaction_datetime", "customer_id", "employee_id"],
-            [40, 100, 60, 80, 120, 130, 130],
+            [40, 100, 60, 100, 120, 120, 120],
             275, 20,
-            13,
+            16,
             self.select_from_table
         )
 
-        Button(self.window, text="Select Transaction", width=19, command=self.select_transaction).place(x=20, y=260)
-        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=260)
-        Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=300)
-        Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=300)
-        Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=300)
+        Button(self.window, text="Select Transaction", width=19, command=self.select_transaction).place(x=20, y=300)
+        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=185, y=300)
+        Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=340)
+        Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=340)
+        Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=185, y=340)
+
         self.reset_form()
         self.window.mainloop()
 

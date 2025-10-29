@@ -10,5 +10,4 @@ class Delivery:
         return f'{self.__dict__}'
 
     def to_tuple(self):
-        return (self.delivery_id, self.first_name, self.last_name, self.address, self.description)
-
+        return tuple((self.delivery_id, self.first_name, self.last_name, self.address, self.description))

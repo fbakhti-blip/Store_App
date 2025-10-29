@@ -1,15 +1,14 @@
-from controller.financial_transaction_controller import FinancialTransactionController
 from view import *
 
-from model.financial_transaction import FinancialTransaction
-from model import Session
+from model import FinancialTransaction, Session
+from controller import FinancialTransactionController
 
 
 class FinancialTransactionView:
     def __init__(self):
         self.window = Tk()
-        self.window.geometry("1150x400")
-        self.window.title("Financial transaction")
+        self.window.geometry("1150x440")
+        self.window.title("Financial Transaction")
 
         self.financial_transaction_id = LabelWithEntry(self.window, "Id", 20, 20, state="readonly")
         self.transaction_type = LabelWithEntry(self.window, "Type", 20, 60)
@@ -22,19 +21,19 @@ class FinancialTransactionView:
 
         self.table = Table(
             self.window,
-            ["Id", "Type", "Customer", "Employee","Amount","Date&Time","PaymentId", "Description"],
+            ["Id", "Type", "Customer", "Employee", "Amount", "Date&Time", "PaymentId", "Description"],
             [60, 60, 140, 140, 100,90,70,180],
             270, 20,
-            16,
+            18,
             self.select_from_table
         )
 
+        Button(self.window, text="Select Transaction", width=19, command=self.select_transaction).place(x=20, y=340)
+        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=340)
+        Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=380)
+        Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=380)
+        Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=380)
 
-        Button(self.window, text="Select Transaction", width=19, command=self.select_transaction).place(x=20, y=315)
-        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=315)
-        Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=355)
-        Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=355)
-        Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=355)
         self.reset_form()
         self.window.mainloop()
 
@@ -79,7 +78,6 @@ class FinancialTransactionView:
         self.description.clear()
         status, financial_transaction_list = FinancialTransactionController.find_all()
         self.table.refresh_table(financial_transaction_list)
-
 
 
     def select_from_table(self, selected_financial_transaction):

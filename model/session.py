@@ -4,6 +4,7 @@ class Session:
     order = None
     order_items = []
     payment = None
+    financial_transaction = None
 
     @classmethod
     def add_order_item(cls, order_item):
