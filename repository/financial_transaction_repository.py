@@ -11,20 +11,20 @@ class FinancialTransactionRepository:
         self.cursor.close()
         self.connection.close()
 
-    def save(self, financial_transactions):
+    def save(self, financial_transaction):
         self.connect()
         self.cursor.execute("""insert into financial_transactions
                                (transaction_type, customer_id, employee_id, amount, date_time, payment_id, description)
                                values (?, ?, ?, ?, ?, ?, ?)""",
-                            [financial_transactions.transaction_type, financial_transactions.customer_id,
-                             financial_transactions.employee_id, financial_transactions.amount,
-                             financial_transactions.date_time,
-                             financial_transactions.payment_id, financial_transactions.description])
-        financial_transactions.financial_transaction_id = self.cursor.lastrowid
+                            [financial_transaction.transaction_type, financial_transaction.customer_id,
+                             financial_transaction.employee_id, financial_transaction.amount,
+                             financial_transaction.date_time,
+                             financial_transaction.payment_id, financial_transaction.description])
+        financial_transaction.financial_transaction_id = self.cursor.lastrowid
         self.connection.commit()
-        return financial_transactions
+        return financial_transaction
 
-    def update(self, financial_transactions):
+    def update(self, financial_transaction):
         self.connect()
         self.cursor.execute("""update financial_transactions
                                set transaction_type=?,
@@ -35,18 +35,18 @@ class FinancialTransactionRepository:
                                    payment_id=?,
                                    description=?
                                where id = ?""",
-                            [financial_transactions.transaction_type, financial_transactions.customer_id,
-                             financial_transactions.employee_id, financial_transactions.amount,
-                             financial_transactions.date_time,
-                             financial_transactions.payment_id, financial_transactions.description,
-                             financial_transactions.id])
+                            [financial_transaction.transaction_type, financial_transaction.customer_id,
+                             financial_transaction.employee_id, financial_transaction.amount,
+                             financial_transaction.date_time,
+                             financial_transaction.payment_id, financial_transaction.description,
+                             financial_transaction.financial_transaction_id])
         self.connection.commit()
         self.disconnect()
-        return financial_transactions
+        return financial_transaction
 
-    def delete(self, id):
+    def delete(self, financial_transaction_id):
         self.connect()
-        self.cursor.execute("delete from financial_transactions where id=?", [id])
+        self.cursor.execute("delete from financial_transactions where id=?", [financial_transaction_id])
         self.connection.commit()
         self.disconnect()
 
@@ -109,7 +109,6 @@ class FinancialTransactionRepository:
         financial_transaction_list = [FinancialTransaction(*transaction) for transaction in self.cursor.fetchall()]
         self.disconnect()
         return financial_transaction_list
-
 
     def find_by_date_time_range_and_employee_id(self, start_date_time, end_date_time, employee_id):
         self.connect()

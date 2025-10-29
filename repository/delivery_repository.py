@@ -14,8 +14,8 @@ class DeliveryRepository:
     def save(self, delivery):
         self.connect()
         self.cursor.execute(
-                "insert into deliveries (first_name, last_name, address, description) values (?,?,?,?)",
-                [delivery.first_name, delivery.last_name, delivery.address, delivery.description])
+            "insert into deliveries (first_name, last_name, address, description) values (?,?,?,?)",
+            [delivery.first_name, delivery.last_name, delivery.address, delivery.description])
         delivery.delivery_id = self.cursor.lastrowid
         self.connection.commit()
         return delivery
@@ -23,7 +23,8 @@ class DeliveryRepository:
     def update(self, delivery):
         self.connect()
         self.cursor.execute("update deliveries set first_name=?, last_name=?, address=?, description=? where id=?",
-                            [delivery.first_name, delivery.last_name, delivery.address, delivery.description, delivery.id])
+                            [delivery.first_name, delivery.last_name, delivery.address, delivery.description,
+                             delivery.delivery_id])
         self.connection.commit()
         self.disconnect()
         return delivery

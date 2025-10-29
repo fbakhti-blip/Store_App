@@ -27,7 +27,7 @@ class ProductRepository:
         self.cursor.execute(
             "update products set name=?, brand=?, model=?, serial=?, category=?, unit=?, expiration_date=? where id=?",
             [product.name, product.brand, product.model, product.serial, product.category, product.unit,
-             product.expiration_date, product.id])
+             product.expiration_date, product.product_id])
         self.connection.commit()
         self.disconnect()
         return product

@@ -26,7 +26,7 @@ class OrderItemRepository:
         self.cursor.execute("update order_items set order_id=?, product_id=?, quantity=?,"
                             " price=?, discount=?, description=? where id=?" ,
                             [order_item.order_id, order_item.product_id, order_item.quantity,
-                             order_item.price, order_item.discount, order_item.description, order_item.id])
+                             order_item.price, order_item.discount, order_item.description, order_item.order_item_id])
         self.connection.commit()
         self.disconnect()
         return order_item

@@ -23,7 +23,7 @@ class SampleRepository:
     def update(self, sample):
         self.connect()
         self.cursor.execute("update samples set name=?,description=? where id=?",
-                            [sample.name, sample.description, sample.id])
+                            [sample.name, sample.description, sample.sample_id])
         self.connection.commit()
         self.disconnect()
         return sample

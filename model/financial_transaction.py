@@ -12,7 +12,7 @@ class FinancialTransaction:
         self.payment_id = payment_id
         self.description = description
 
-    def validatte(self):
+    def validate(self):
         transaction_type_validator(self.transaction_type)
         customer_id_validator(self.customer_id)
         employee_id_validator(self.employee_id)

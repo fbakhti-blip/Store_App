@@ -25,7 +25,7 @@ class CustomerRepository:
         self.connect()
         self.cursor.execute(
             "update customers set first_name=?, last_name=?, phone_number=?, address=? where id=?",
-            [customer.first_name, customer.last_name, customer.phone_number, customer.address, customer.id])
+            [customer.first_name, customer.last_name, customer.phone_number, customer.address, customer.customer_id])
         self.connection.commit()
         self.disconnect()
         return customer

@@ -17,7 +17,7 @@ class BankRepository:
 
     def save(self, bank):
         self.connect()
-        self.cursor.execute("insert into banks (name,account,balance,description) values (?,?,?,?)",
+        self.cursor.execute("insert into banks (name, account, balance, description) values (?,?,?,?)",
                             [bank.name, bank.account, bank.balance, bank.description])
         bank.id = self.cursor.lastrowid
         self.connection.commit()
@@ -25,7 +25,7 @@ class BankRepository:
 
     def update(self, bank):
         self.connect()
-        self.cursor.execute("update banks set name=?,account=?, balance=?,description=? where id=?",
+        self.cursor.execute("update banks set name=?, account=?, balance=?, description=? where id=?",
                             [bank.name, bank.account, bank.balance, bank.description, bank.bank_id])
         self.connection.commit()
         self.disconnect()

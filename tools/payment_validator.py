@@ -44,7 +44,7 @@ def employee_id_validator(employee_id):
 
 
 def description_validator(description):
-    if not (type(description) == str and re.match(r"^[a-zA-Z0-9\s.,_-]+$", description)):
+    if not (isinstance(description, str) and re.match(r"^[\w\s.,-]+$", description)):
         raise ValueError("Invalid description !!!")
     else:
         return description

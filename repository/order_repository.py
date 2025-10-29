@@ -22,7 +22,7 @@ class OrderRepository:
     def update(self, order):
         self.connect()
         self.cursor.execute("update orders set order_type=?, customer_id=?, employee_id=?, date_time=?, payment_id=?, warehouse_transaction_id=?, tax=?, total_discount=?, total_amount=? where id=?" ,
-                            [order.order_type, order.customer_id, order.employee_id,  order.date_time, order.payment_id, order.warehouse_transaction_id, order.tax, order.total_discount, order.total_amount, order.id])
+                            [order.order_type, order.customer_id, order.employee_id,  order.date_time, order.payment_id, order.warehouse_transaction_id, order.tax, order.total_discount, order.total_amount, order.order_id])
         self.connection.commit()
         self.disconnect()
         return order

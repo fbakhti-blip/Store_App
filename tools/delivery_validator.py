@@ -13,13 +13,13 @@ def last_name_validator(last_name):
         return last_name
 
 def address_validator(address):
-    if not (isinstance(address, str) and re.match(r"^[\w,\-]{3,100}$", address)):
+    if not (isinstance(address, str) and re.match(r"^[\w,\-\s]{3,100}$", address)):
         raise ValueError("Invalid address !!!")
     else:
         return address
 
 def description_validator(description):
-    if not (isinstance(description, str) and re.match(r"^[a-zA-Z\s]*$", description)):
+    if not (isinstance(description, str) and re.match(r"^[\w,\-\s]*$", description)):
         raise ValueError("Invalid description !!!")
     else:
         return description
