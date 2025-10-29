@@ -8,6 +8,7 @@ class ProductController:
     def save(cls, name, brand, model, serial, category, unit, expiration_date):
         try:
             product = Product(None, name, brand, model, serial, category, unit, expiration_date)
+            product.validate()
             product = ProductService.save(product)
             Logger.info(f"Product {product} saved")
             return True, f"Product Saved Successfully"
@@ -19,6 +20,7 @@ class ProductController:
     def update(cls, product_id, name, brand, model, serial, category, unit, expiration_date):
         try:
             product = Product(product_id, name, brand, model, serial, category, unit, expiration_date)
+            product.validate()
             product = ProductService.update(product)
             Logger.info(f"Product {product} updated")
             return True, "Product Updated Successfully"

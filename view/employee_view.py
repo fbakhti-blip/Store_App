@@ -20,7 +20,7 @@ class EmployeeView:
         
         self.table=Table(self.window,
             ["Id", "FirstName","LastName","Salary","Occupation","PhoneNumber","Username","Password","Role"],
-            [40,100,100,60,100,100,100,100,60],
+            [40,100,100,70,90,100,100,100,60],
             270,20,
             20,
             self.select_from_table)

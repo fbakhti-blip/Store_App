@@ -10,6 +10,7 @@ class FinancialTransactionController:
         try:
             financial_transaction = FinancialTransaction(None, transaction_type, customer_id, employee_id, amount,
                                                          date_time, payment_id, description)
+            financial_transaction.validate()
             financial_transaction = FinancialTransactionService.save(financial_transaction)
             Logger.info(f"FinancialTransaction {financial_transaction} saved")
             return True, f"FinancialTransaction Saved Successfully"
@@ -22,6 +23,7 @@ class FinancialTransactionController:
         try:
             financial_transaction = FinancialTransaction(financial_transaction_id, transaction_type, customer_id, employee_id, amount,
                                                          date_time, payment_id, description)
+            financial_transaction.validate()
             financial_transaction = FinancialTransactionService.update(financial_transaction)
             Logger.info(f"FinancialTransaction {financial_transaction} updated")
             return True, "FinancialTransaction Updated Successfully"

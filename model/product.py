@@ -1,3 +1,5 @@
+from tools.product_validator import *
+
 class Product:
     def __init__(self, product_id, name, brand, model, serial, category, unit, expiration_date=None):
         self.product_id = product_id
@@ -8,6 +10,15 @@ class Product:
         self.category = category
         self.unit = unit
         self.expiration_date = expiration_date
+
+    def validate(self):
+        name_validator(self.name)
+        brand_validator(self.brand)
+        model_validator(self.model)
+        serial_validator(self.serial)
+        category_validator(self.category)
+        unit_validator(self.unit)
+        expiration_date_validator(self.expiration_date)
 
     def __repr__(self):
         return f"{self.__dict__}"
