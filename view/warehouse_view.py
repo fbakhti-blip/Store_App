@@ -37,7 +37,8 @@ class WarehouseView:
             messagebox.showerror("Warehouse Save Error", message)
 
     def edit_click(self):
-        status, message = WarehouseController.update(self.warehouse_id.get(), self.product_id.get(), self.quantity.get())
+        status, message = WarehouseController.update(self.warehouse_id.get(), self.product_id.get(),
+                                                     self.quantity.get())
         if status:
             messagebox.showinfo("Warehouse Update", message)
             self.reset_form()

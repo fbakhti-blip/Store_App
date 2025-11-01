@@ -1,7 +1,9 @@
 from tkinter import *
 
+
 class LabelWithEntry:
-    def __init__(self, master, label_text, x, y, distance=90, data_type=StringVar, state="normal",on_keypress_function=None):
+    def __init__(self, master, label_text, x, y, distance=90, data_type=StringVar, state="normal",
+                 on_keypress_function=None):
         self.data_type = data_type
         self.variable = data_type(master)
         Label(master, text=label_text).place(x=x, y=y)
@@ -27,5 +29,5 @@ class LabelWithEntry:
             self.variable.set("")
         elif self.data_type == DoubleVar:
             self.variable.set(0.0)
-        elif self.data_type== BooleanVar:
+        elif self.data_type == BooleanVar:
             self.variable.set(True)

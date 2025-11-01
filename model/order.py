@@ -1,10 +1,10 @@
 from tools.order_validator import *
 
+
 class Order:
     def __init__(self, order_id, order_type, customer_id, employee_id, date_time,
                  payment_id, warehouse_transaction_id, tax=None, total_discount=None,
                  total_amount=None):
-
         self.order_id = order_id
         self.order_type = order_type
         self.customer_id = customer_id
@@ -42,4 +42,3 @@ class Order:
             self.tax,
             self.total_discount,
             self.total_amount))
-

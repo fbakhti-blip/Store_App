@@ -35,7 +35,8 @@ class TestPaymentController(unittest.TestCase):
             status_all, payment_list = PaymentController.find_all()
             if payment_list:
                 payment_id = payment_list[-1].payment_id
-                status, message = PaymentController.update(payment_id, "income", "transfer", "2024/01/04", 1, 350000, 1, "After update")
+                status, message = PaymentController.update(payment_id, "income", "transfer", "2024/01/04", 1, 350000, 1,
+                                                           "After update")
                 self.assertTrue(status)
 
     def test_delete_payment(self):

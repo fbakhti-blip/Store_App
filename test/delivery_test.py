@@ -38,7 +38,8 @@ class TestDeliveryController(unittest.TestCase):
             status_all, delivery_list = self.controller.find_all()
             if delivery_list:
                 delivery_id = delivery_list[-1].delivery_id
-                status, message = self.controller.update(delivery_id, "Updated", "Name", "New Address", "Updated description")
+                status, message = self.controller.update(delivery_id, "Updated", "Name", "New Address",
+                                                         "Updated description")
                 self.assertTrue(status)
 
     def test_delete_delivery(self):

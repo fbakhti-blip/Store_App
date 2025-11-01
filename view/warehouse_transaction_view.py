@@ -1,3 +1,6 @@
+from view.customer_view import CustomerView
+from view.employee_view import EmployeeView
+from view.product_view import ProductView
 from view import *
 from model import WarehouseTransaction, Session
 from controller import WarehouseTransactionController
@@ -9,15 +12,19 @@ class WarehouseTransactionView:
         self.window.geometry("970x400")
         self.window.title("Warehouse Transaction")
 
-        self.warehouse_transaction_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly", distance=100)
-        self.product_id = LabelWithEntry(self.window, "Product Id", 20, 60, distance=100)
+        self.warehouse_transaction_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, distance=100,
+                                                       state="readonly")
+        self.product_id = LabelWithEntry(self.window, "Product", 20, 60, distance=100, state="readonly",
+                                         on_keypress_function=lambda: ProductView())
         self.quantity = LabelWithEntry(self.window, "Quantity", 20, 100, distance=100)
         self.transaction_datetime = LabelWithEntry(self.window, "Transaction Date", 20, 180, distance=100)
-        self.customer_id = LabelWithEntry(self.window, "Customer Id", 20, 220, distance=100)
-        self.employee_id = LabelWithEntry(self.window, "Employee Id", 20, 260, distance=100)
+        self.customer_id = LabelWithEntry(self.window, "Customer", 20, 220, distance=100, state="readonly",
+                                          on_keypress_function=lambda: CustomerView())
+        self.employee_id = LabelWithEntry(self.window, "Employee", 20, 260, distance=100, state="readonly",
+                                          on_keypress_function=lambda: EmployeeView())
 
-        transaction_type_list = ["Get", "Receive"]
-        type_transaction = StringVar(value="Get")
+        transaction_type_list = ["input", "output"]
+        type_transaction = StringVar(value="input")
         Label(self.window, text="Transaction Type").place(x=20, y=140)
         self.transaction_type = Combobox(
             self.window,
@@ -47,9 +54,9 @@ class WarehouseTransactionView:
 
     def save_click(self):
         status, message = WarehouseTransactionController.save(self.product_id.get(), self.quantity.get(),
-                                                                     self.transaction_type.get(),
-                                                                     self.transaction_datetime.get(),
-                                                                     self.customer_id.get(), self.employee_id.get())
+                                                              self.transaction_type.get(),
+                                                              self.transaction_datetime.get(),
+                                                              self.customer_id.get(), self.employee_id.get())
         if status:
             messagebox.showinfo("Warehouse_transaction Save", message)
             self.reset_form()
@@ -57,10 +64,11 @@ class WarehouseTransactionView:
             messagebox.showerror("Warehouse_transaction Save Error", message)
 
     def edit_click(self):
-        status, message = WarehouseTransactionController.update(self.warehouse_transaction_id.get(), self.product_id.get(),
-                                                                       self.quantity.get(), self.transaction_type.get(),
-                                                                       self.transaction_datetime.get(),
-                                                                       self.customer_id.get(), self.employee_id.get())
+        status, message = WarehouseTransactionController.update(self.warehouse_transaction_id.get(),
+                                                                self.product_id.get(),
+                                                                self.quantity.get(), self.transaction_type.get(),
+                                                                self.transaction_datetime.get(),
+                                                                self.customer_id.get(), self.employee_id.get())
         if status:
             messagebox.showinfo("Warehouse_transaction Update", message)
             self.reset_form()
@@ -79,7 +87,7 @@ class WarehouseTransactionView:
         self.warehouse_transaction_id.clear()
         self.product_id.clear()
         self.quantity.clear()
-        self.transaction_type.set("get")
+        self.transaction_type.set("input")
         self.transaction_datetime.clear()
         self.customer_id.clear()
         self.employee_id.clear()
@@ -102,7 +110,8 @@ class WarehouseTransactionView:
 
     def select_transaction(self):
         if self.warehouse_transaction_id.get():
-            status, Session.warehouse_transaction = WarehouseTransactionController.find_by_id(self.warehouse_transaction_id.get())
+            status, Session.warehouse_transaction = WarehouseTransactionController.find_by_id(
+                self.warehouse_transaction_id.get())
         else:
             messagebox.showerror("Select", "Select Warehouse Transaction")
 

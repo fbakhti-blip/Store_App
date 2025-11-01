@@ -13,6 +13,7 @@ from view.warehouse_transaction_view import WarehouseTransactionView
 from view.financial_transaction_view import FinancialTransactionView
 from view.delivery_view import DeliveryView
 
+
 class DashboardView:
     def employee_view(self):
         ui = EmployeeView()
@@ -75,17 +76,19 @@ class DashboardView:
         Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color, text="Product",
                command=self.product_view).place(x=80, y=180 + y_dist * 3)
         Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color, text="Warehouse",
-               command= self.warehouse_view).place(x=80, y=180 + y_dist * 4)
+               command=self.warehouse_view).place(x=80, y=180 + y_dist * 4)
         Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color, text="Order",
                command=self.order_view).place(x=80, y=180 + y_dist * 5)
         Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color, text="OrderItem",
                command=self.order_item_view).place(x=80, y=180 + y_dist * 6)
         Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color, text="Payment",
                command=self.payment_view).place(x=80, y=180 + y_dist * 7)
-        Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color, text="Financial Transaction",
+        Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color,
+               text="Financial Transaction",
                command=self.financial_transaction_view).place(x=80, y=180 + y_dist * 8)
-        Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color, text="Warehouse Transaction",
-               command= self.warehouse_transaction_view).place(x=80, y=180 + y_dist * 9)
+        Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color,
+               text="Warehouse Transaction",
+               command=self.warehouse_transaction_view).place(x=80, y=180 + y_dist * 9)
         Button(self.window, font=font, width=width, bg=background_color, fg=foreground_color, text="Delivery",
                command=self.delivery_view).place(x=80, y=180 + y_dist * 10)
 
@@ -93,7 +96,3 @@ class DashboardView:
         Label(self.window, text=f"Employee : {employee_name}", font=font, bg="white").place(x=80, y=850)
 
         self.window.mainloop()
-
-
-
-

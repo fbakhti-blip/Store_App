@@ -10,7 +10,8 @@ class FinancialTransactionService:
 
     @classmethod
     def update(cls, financial_transaction):
-        financial_transaction_result = cls.financial_transaction_repository.find_by_id(financial_transaction.financial_transaction_id)
+        financial_transaction_result = cls.financial_transaction_repository.find_by_id(
+            financial_transaction.financial_transaction_id)
         if financial_transaction_result:
             return cls.financial_transaction_repository.update(financial_transaction)
         else:
@@ -59,4 +60,5 @@ class FinancialTransactionService:
 
     @classmethod
     def find_by_date_time_range_and_customer_id(cls, start_date_time, end_date_time, customer_id):
-        return cls.financial_transaction_repository.find_by_date_time_range_and_customer_id(start_date_time, end_date_time, customer_id)
+        return cls.financial_transaction_repository.find_by_date_time_range_and_customer_id(start_date_time,
+                                                                                            end_date_time, customer_id)

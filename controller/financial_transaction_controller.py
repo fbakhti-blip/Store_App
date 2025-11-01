@@ -19,9 +19,11 @@ class FinancialTransactionController:
             return False, e
 
     @classmethod
-    def update(cls, financial_transaction_id, transaction_type, customer_id, employee_id, amount, date_time, payment_id, description):
+    def update(cls, financial_transaction_id, transaction_type, customer_id, employee_id, amount, date_time, payment_id,
+               description):
         try:
-            financial_transaction = FinancialTransaction(financial_transaction_id, transaction_type, customer_id, employee_id, amount,
+            financial_transaction = FinancialTransaction(financial_transaction_id, transaction_type, customer_id,
+                                                         employee_id, amount,
                                                          date_time, payment_id, description)
             financial_transaction.validate()
             financial_transaction = FinancialTransactionService.update(financial_transaction)
@@ -104,7 +106,8 @@ class FinancialTransactionController:
     @classmethod
     def find_by_date_time_range(cls, start_date_time, end_date_time):
         try:
-            financial_transaction_list = FinancialTransactionService.find_by_date_time_range(start_date_time, end_date_time)
+            financial_transaction_list = FinancialTransactionService.find_by_date_time_range(start_date_time,
+                                                                                             end_date_time)
             Logger.info(f"FinancialTransaction FindByDateTimeRange {start_date_time} to {end_date_time}")
             return True, financial_transaction_list
         except Exception as e:
@@ -114,8 +117,10 @@ class FinancialTransactionController:
     @classmethod
     def find_by_date_time_range_and_customer_id(cls, start_date_time, end_date_time, customer_id):
         try:
-            financial_transaction_list = FinancialTransactionService.find_by_date_time_range_and_customer_id(start_date_time, end_date_time, customer_id)
-            Logger.info(f"FinancialTransaction FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, customer: {customer_id}")
+            financial_transaction_list = FinancialTransactionService.find_by_date_time_range_and_customer_id(
+                start_date_time, end_date_time, customer_id)
+            Logger.info(
+                f"FinancialTransaction FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, customer: {customer_id}")
             return True, financial_transaction_list
         except Exception as e:
             Logger.error(f"FinancialTransaction FindByDateTimeRangeAndCustomerId Error: {e}")

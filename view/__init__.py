@@ -5,7 +5,6 @@ from tkinter.ttk import Combobox
 
 from PIL import ImageTk, Image
 
-
 from view.component.label_with_entry import LabelWithEntry
 from view.component.table import Table
 
@@ -25,7 +24,6 @@ from view.financial_transaction_view import FinancialTransactionView
 from view.warehouse_view import WarehouseView
 from view.warehouse_transaction_view import WarehouseTransactionView
 from view.delivery_view import DeliveryView
-
 
 # Group D
 from view.order_view import OrderView

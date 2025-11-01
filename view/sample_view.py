@@ -2,6 +2,7 @@ from view import *
 from model import Sample
 from controller import SampleController
 
+
 class SampleView:
     def __init__(self):
         self.window = Tk()
@@ -66,4 +67,3 @@ class SampleView:
                 self.sample_id.set(sample.sample_id)
                 self.name.set(sample.name)
                 self.description.set(sample.description)
-

@@ -36,7 +36,7 @@ class CustomerView:
 
     def save_click(self):
         status, message = CustomerController.save(self.first_name.get(), self.last_name.get(),
-                                                        self.phone_number.get(), self.address.get())
+                                                  self.phone_number.get(), self.address.get())
         if status:
             messagebox.showinfo("Customer Save", message)
             self.reset_form()
@@ -45,7 +45,7 @@ class CustomerView:
 
     def edit_click(self):
         status, message = CustomerController.update(self.customer_id.get(), self.first_name.get(), self.last_name.get(),
-                                                          self.phone_number.get(), self.address.get())
+                                                    self.phone_number.get(), self.address.get())
         if status:
             messagebox.showinfo("Customer Update", message)
             self.reset_form()
@@ -84,7 +84,7 @@ class CustomerView:
         if self.customer_id.get():
             status, Session.customer = CustomerController.find_by_id(self.customer_id.get())
         else:
-            messagebox.showerror("Select","Select Customer")
+            messagebox.showerror("Select", "Select Customer")
 
     def refresh(self):
         pass

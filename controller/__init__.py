@@ -1,4 +1,4 @@
-from controller.bank_controller import  BankController
+from controller.bank_controller import BankController
 from controller.customer_controller import CustomerController
 from controller.delivery_controller import DeliveryController
 from controller.employee_controller import EmployeeController

@@ -27,10 +27,9 @@ class Employee:
         return f"{self.first_name} {self.last_name}"
 
     def __repr__(self):
-     return f"{self.__dict__}"
-
+        return f"{self.__dict__}"
 
     def to_tuple(self):
-      return tuple(
-        (self.employee_id, self.first_name, self.last_name, self.salary, self.occupation, self.phone_number, self.username,
-         self.password,self.role))
+        return tuple(
+            (self.employee_id, self.first_name, self.last_name, self.salary, self.occupation, self.phone_number,
+             self.username, self.password, self.role))

@@ -4,6 +4,7 @@ from model import Order
 from controller import OrderController
 from view.show_order_view import ShowOderView
 
+
 class OrderView:
     def __init__(self):
 
@@ -37,9 +38,9 @@ class OrderView:
         self.search_employee_id = LabelWithEntry(self.window, "Employee Id", 500, 20, data_type=IntVar, distance=75,
                                                  on_keypress_function=self.search_by_employee_id)
         self.search_start_date_time = LabelWithEntry(self.window, "Start Date", 720, 20, distance=60,
-                                                 on_keypress_function=self.search_by_date_time_range)
+                                                     on_keypress_function=self.search_by_date_time_range)
         self.search_end_date_time = LabelWithEntry(self.window, "End Date", 920, 20, distance=55,
-                                                 on_keypress_function=self.search_by_date_time_range)
+                                                   on_keypress_function=self.search_by_date_time_range)
 
         Label(self.window, text="Order Type").place(x=1120, y=20)
         self.search_order_type = Combobox(
@@ -53,7 +54,8 @@ class OrderView:
         # Table
         self.table = Table(
             self.window,
-            ["Id", "Order Type", "Customer", "Employee", "Date & Time", "Payment Id", "Ware Trans Id", "Tax", "Total Discount", "Total Amount"],
+            ["Id", "Order Type", "Customer", "Employee", "Date & Time", "Payment Id", "Ware Trans Id", "Tax",
+             "Total Discount", "Total Amount"],
             [40, 90, 140, 140, 150, 90, 90, 90, 90, 120],
             280, 60,
             21,
@@ -74,9 +76,9 @@ class OrderView:
 
     def save_click(self):
         status, message = OrderController.save(self.order_type.get(), self.customer_id.get(), self.employee_id.get(),
-                                                     self.date_time.get(), self.payment_id.get(),
-                                                     self.warehouse_transaction_id.get(), self.tax.get(),
-                                                     self.total_discount.get(), self.total_amount.get())
+                                               self.date_time.get(), self.payment_id.get(),
+                                               self.warehouse_transaction_id.get(), self.tax.get(),
+                                               self.total_discount.get(), self.total_amount.get())
         if status:
             messagebox.showinfo("Order Save", message)
             self.reset_form()
@@ -84,9 +86,11 @@ class OrderView:
             messagebox.showerror("Order Save Error", message)
 
     def edit_click(self):
-        status, message = OrderController.update(self.order_id.get(), self.order_type.get(), self.customer_id.get(), self.employee_id.get(),
-                                                       self.date_time.get(), self.payment_id.get(), self.warehouse_transaction_id.get(),
-                                                       self.tax.get(), self.total_discount.get(), self.total_amount.get())
+        status, message = OrderController.update(self.order_id.get(), self.order_type.get(), self.customer_id.get(),
+                                                 self.employee_id.get(),
+                                                 self.date_time.get(), self.payment_id.get(),
+                                                 self.warehouse_transaction_id.get(),
+                                                 self.tax.get(), self.total_discount.get(), self.total_amount.get())
         if status:
             messagebox.showinfo("Order Update", message)
             self.reset_form()
@@ -149,7 +153,8 @@ class OrderView:
             self.reset_form()
 
     def search_by_date_time_range(self):
-        status, order_list = OrderController.find_by_date_time_range(self.search_start_date_time.get(), self.search_end_date_time.get())
+        status, order_list = OrderController.find_by_date_time_range(self.search_start_date_time.get(),
+                                                                     self.search_end_date_time.get())
         if status and order_list:
             self.table.refresh_table(order_list)
         else:
@@ -161,5 +166,3 @@ class OrderView:
             self.table.refresh_table(order_list)
         else:
             self.reset_form()
-
-

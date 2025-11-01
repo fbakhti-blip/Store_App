@@ -7,7 +7,8 @@ class TestProductController(unittest.TestCase):
 
     def test_save_product(self):
         """Test saving a product"""
-        status, message = ProductController.save("Laptop", "Dell", "XPS15", "SN123456", "Electronics", "Piece", "2025/12/31")
+        status, message = ProductController.save("Laptop", "Dell", "XPS15", "SN123456", "Electronics", "Piece",
+                                                 "2025/12/31")
         self.assertTrue(status)
         self.assertIn("Saved Successfully", message)
 
@@ -35,7 +36,8 @@ class TestProductController(unittest.TestCase):
             status_all, product_list = ProductController.find_all()
             if product_list:
                 product_id = product_list[-1].product_id
-                status, message = ProductController.update(product_id, "Keyboard Pro", "Corsair", "K95", "SN456", "Electronics", "Piece", None)
+                status, message = ProductController.update(product_id, "Keyboard Pro", "Corsair", "K95", "SN456",
+                                                           "Electronics", "Piece", None)
                 self.assertTrue(status)
 
     def test_delete_product(self):

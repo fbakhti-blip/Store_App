@@ -1,5 +1,6 @@
 from tools.product_validator import *
 
+
 class Product:
     def __init__(self, product_id, name, brand, model, serial, category, unit, expiration_date=None):
         self.product_id = product_id
@@ -27,4 +28,5 @@ class Product:
         return f"{self.name} {self.brand}"
 
     def to_tuple(self):
-        return tuple((self.product_id, self.name, self.brand,self.model,self.serial,self.category,self.unit,self.expiration_date))
+        return tuple((self.product_id, self.name, self.brand, self.model, self.serial, self.category, self.unit,
+                      self.expiration_date))

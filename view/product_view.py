@@ -7,7 +7,7 @@ class ProductView:
     def __init__(self):
         self.window = Tk()
         self.window.geometry("1000x440")
-        self.window.title("product")
+        self.window.title("Product")
 
         self.product_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
         self.name = LabelWithEntry(self.window, "Name", 20, 60)
@@ -26,7 +26,7 @@ class ProductView:
         self.table = Table(
             self.window,
             ["Id", "Name", "Brand", "Model", "Serial", "Category", "Unit", "ExpirationDate"],
-            [40, 100, 100, 60, 100, 100, 100, 100],
+            [40, 100, 100, 80, 80, 100, 100, 100],
             270, 60,
             16,
             self.select_from_table
@@ -43,8 +43,8 @@ class ProductView:
 
     def save_click(self):
         status, message = ProductController.save(self.name.get(), self.brand.get(), self.model.get(),
-                                                       self.category.get(),
-                                                       self.serial.get(), self.unit.get(), self.expiration_date.get())
+                                                 self.category.get(),
+                                                 self.serial.get(), self.unit.get(), self.expiration_date.get())
         if status:
             messagebox.showinfo("Product Save", message)
             self.reset_form()
@@ -53,9 +53,9 @@ class ProductView:
 
     def edit_click(self):
         status, message = ProductController.update(self.product_id.get(), self.name.get(), self.brand.get(),
-                                                         self.model.get(),
-                                                         self.category.get(), self.serial.get(), self.unit.get(),
-                                                         self.expiration_date.get())
+                                                   self.model.get(),
+                                                   self.category.get(), self.serial.get(), self.unit.get(),
+                                                   self.expiration_date.get())
         if status:
             messagebox.showinfo("Product Update", message)
             self.reset_form()

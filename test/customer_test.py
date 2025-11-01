@@ -35,7 +35,8 @@ class TestCustomerController(unittest.TestCase):
             status_all, customer_list = CustomerController.find_all()
             if customer_list:
                 customer_id = customer_list[-1].customer_id
-                status, message = CustomerController.update(customer_id, "Updated", "Name", "09999999999", "New Address")
+                status, message = CustomerController.update(customer_id, "Updated", "Name", "09999999999",
+                                                            "New Address")
                 self.assertTrue(status)
 
     def test_delete_customer(self):

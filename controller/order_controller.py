@@ -26,8 +26,8 @@ class OrderController:
                total_amount):
         try:
             order = Order(order_id, order_type, customer_id, employee_id, date_time,
-                         payment_id, warehouse_transaction_id, tax, total_discount,
-                         total_amount)
+                          payment_id, warehouse_transaction_id, tax, total_discount,
+                          total_amount)
             order.validate()
             order = OrderService.update(order)
             Logger.info(f"Order {order} updated")
@@ -109,8 +109,10 @@ class OrderController:
     @classmethod
     def find_by_date_time_range_and_customer_id(cls, start_date_time, end_date_time, customer_id):
         try:
-            order_list = OrderService.find_by_date_time_range_and_customer_id(start_date_time, end_date_time, customer_id)
-            Logger.info(f"Order FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, customer: {customer_id}")
+            order_list = OrderService.find_by_date_time_range_and_customer_id(start_date_time, end_date_time,
+                                                                              customer_id)
+            Logger.info(
+                f"Order FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, customer: {customer_id}")
             return True, order_list
         except Exception as e:
             Logger.error(f"Order FindByDateTimeRangeAndCustomerId Error: {e}")

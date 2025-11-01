@@ -3,6 +3,7 @@ from view import *
 from model import OrderItem, Session
 from controller import OrderItemController
 
+
 class OrderItemView:
     def __init__(self):
         self.window = Tk()
@@ -22,13 +23,13 @@ class OrderItemView:
         self.search_product_id = LabelWithEntry(self.window, "Product Id", 500, 20, data_type=IntVar, distance=70,
                                                 on_keypress_function=self.search_by_product_id)
         self.search_quantity = LabelWithEntry(self.window, "Quantity<?", 710, 20, data_type=IntVar, distance=70,
-                                                on_keypress_function=self.search_by_quantity)
+                                              on_keypress_function=self.search_by_quantity)
 
         self.table = Table(self.window,
                            ["Id", "Order Id", "Product", "Quantity", "Price", "Discount", "Description"],
                            [40, 60, 140, 60, 100, 60, 145]
-                           , 300 ,60 ,
-                           14 ,
+                           , 300, 60,
+                           14,
                            self.select_from_table
                            )
 
@@ -43,7 +44,7 @@ class OrderItemView:
 
     def save_click(self):
         status, message = OrderItemController.save(self.order_id.get(), self.product_id.get(), self.quantity.get(),
-                                                          self.price.get(), self.discount.get(), self.description.get())
+                                                   self.price.get(), self.discount.get(), self.description.get())
         if status:
             messagebox.showinfo("Order Item Save", message)
             self.reset_form()
@@ -51,8 +52,9 @@ class OrderItemView:
             messagebox.showerror("Order Item Save Error", message)
 
     def edit_click(self):
-        status, message = OrderItemController.update(self.order_item_id.get(),self.order_id.get(), self.product_id.get(), self.quantity.get(),
-                                                          self.price.get(), self.discount.get(), self.description.get())
+        status, message = OrderItemController.update(self.order_item_id.get(), self.order_id.get(),
+                                                     self.product_id.get(), self.quantity.get(),
+                                                     self.price.get(), self.discount.get(), self.description.get())
         if status:
             messagebox.showinfo("Order Item Update", message)
             self.reset_form()
@@ -68,19 +70,19 @@ class OrderItemView:
             messagebox.showerror("Order Item Delete Error", message)
 
     def reset_form(self):
-       self.order_item_id.clear()
-       self.order_id.clear()
-       self.product_id.clear()
-       self.quantity.clear()
-       self.price.clear()
-       self.discount.clear()
-       self.description.clear()
-       status, order_item_list = OrderItemController.find_all()
-       self.table.refresh_table(order_item_list)
+        self.order_item_id.clear()
+        self.order_id.clear()
+        self.product_id.clear()
+        self.quantity.clear()
+        self.price.clear()
+        self.discount.clear()
+        self.description.clear()
+        status, order_item_list = OrderItemController.find_all()
+        self.table.refresh_table(order_item_list)
 
     def select_from_table(self, selected_order_item):
         if selected_order_item:
-            status , order_item = OrderItemController.find_by_id(selected_order_item[0])
+            status, order_item = OrderItemController.find_by_id(selected_order_item[0])
             if status:
                 order_item = OrderItem(*selected_order_item)
                 self.order_item_id.set(order_item.order_item_id)
@@ -120,4 +122,3 @@ class OrderItemView:
 
     def refresh(self):
         pass
-

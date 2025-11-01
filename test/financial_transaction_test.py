@@ -38,7 +38,8 @@ class TestFinancialTransactionController(unittest.TestCase):
             status_all, transaction_list = self.controller.find_all()
             if transaction_list:
                 transaction_id = transaction_list[-1].financial_transaction_id
-                status, message = self.controller.update(transaction_id, "expense", 1, 1, 150000, "2024/01/04", 1, "After update")
+                status, message = self.controller.update(transaction_id, "expense", 1, 1, 150000, "2024/01/04", 1,
+                                                         "After update")
                 self.assertTrue(status)
 
     def test_delete_financial_transaction(self):

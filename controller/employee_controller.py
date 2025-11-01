@@ -19,7 +19,8 @@ class EmployeeController:
     @classmethod
     def update(cls, employee_id, first_name, last_name, salary, occupation, phone_number, username, password, role):
         try:
-            employee = Employee(employee_id, first_name, last_name, salary, occupation, phone_number, username, password, role)
+            employee = Employee(employee_id, first_name, last_name, salary, occupation, phone_number, username,
+                                password, role)
             employee.validate()
             employee = EmployeeService.update(employee)
             Logger.info(f"Employee {employee} updated")

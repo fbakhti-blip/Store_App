@@ -9,5 +9,3 @@ class Sample:
 
     def to_tuple(self):
         return tuple((self.sample_id, self.name, self.description))
-
-

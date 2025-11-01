@@ -3,10 +3,11 @@ from view import *
 from model import Delivery
 from controller import DeliveryController
 
+
 class DeliveryView:
     def __init__(self):
         self.window = Tk()
-        self.window.geometry("740x320")
+        self.window.geometry("850x320")
         self.window.title("Delivery")
 
         self.delivery_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
@@ -18,7 +19,7 @@ class DeliveryView:
         self.table = Table(
             self.window,
             ["Id", "First Name", "Last Name", "Address", "Description"],
-            [40, 100, 100, 100, 100],
+            [40, 100, 100, 140, 160],
             275, 20,
             12,
             self.select_from_table
@@ -31,9 +32,9 @@ class DeliveryView:
         self.reset_form()
         self.window.mainloop()
 
-
     def save_click(self):
-        status, message = DeliveryController.save(self.first_name.get(), self.last_name.get(), self.address.get(), self.description.get())
+        status, message = DeliveryController.save(self.first_name.get(), self.last_name.get(), self.address.get(),
+                                                  self.description.get())
         if status:
             messagebox.showinfo("Delivery Save", message)
             self.reset_form()
@@ -42,7 +43,7 @@ class DeliveryView:
 
     def edit_click(self):
         status, message = DeliveryController.update(self.delivery_id.get(), self.first_name.get(), self.last_name.get(),
-                                                        self.address.get(), self.description.get())
+                                                    self.address.get(), self.description.get())
         if status:
             messagebox.showinfo("Delivery Update", message)
             self.reset_form()
@@ -76,4 +77,3 @@ class DeliveryView:
                 self.last_name.set(delivery.last_name)
                 self.address.set(delivery.address)
                 self.description.set(delivery.description)
-

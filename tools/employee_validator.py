@@ -16,7 +16,7 @@ def last_name_validator(last_name):
 
 
 def salary_validator(salary):
-    if not (isinstance(salary, int) and salary>0):
+    if not (isinstance(salary, int) and salary > 0):
         raise ValueError("Invalid salary !!!")
     else:
         return salary

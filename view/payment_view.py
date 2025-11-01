@@ -13,19 +13,41 @@ class PaymentView:
         self.window.title("Payment")
 
         self.payment_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
-        self.transaction_type = LabelWithEntry(self.window, "TransactType", 20, 60)
-        self.payment_type = LabelWithEntry(self.window, "PaymentType", 20, 100)
         self.date_time = LabelWithEntry(self.window, "DateTime", 20, 140)
-        self.customer_id = LabelWithEntry(self.window, "Customer", 20, 180, data_type=IntVar, state="readonly",on_keypress_function=lambda : CustomerView())
+        self.customer_id = LabelWithEntry(self.window, "Customer", 20, 180, data_type=IntVar, state="readonly",
+                                          on_keypress_function=lambda: CustomerView())
         self.total_amount = LabelWithEntry(self.window, "TotalAmount", 20, 220, data_type=IntVar)
-        self.employee_id = LabelWithEntry(self.window, "Employee", 20, 260, data_type=IntVar, state="readonly", on_keypress_function=lambda : EmployeeView())
+        self.employee_id = LabelWithEntry(self.window, "Employee", 20, 260, data_type=IntVar, state="readonly",
+                                          on_keypress_function=lambda: EmployeeView())
         self.description = LabelWithEntry(self.window, "Description", 20, 300)
+
+        transaction_type_list = ["income", "expense"]
+        type_transaction = StringVar(value="income")
+        Label(self.window, text="TransactType").place(x=20, y=60)
+        self.transaction_type = Combobox(
+            self.window,
+            values=transaction_type_list,
+            textvariable=type_transaction,
+            width=17,
+            state="readonly")
+        self.transaction_type.place(x=110, y=60)
+
+        payment_type_list = ["card", "cash", "check", "transfer"]
+        type_payment = StringVar(value="card")
+        Label(self.window, text="PaymentType").place(x=20, y=100)
+        self.payment_type = Combobox(
+            self.window,
+            values=payment_type_list,
+            textvariable=type_payment,
+            width=17,
+            state="readonly")
+        self.payment_type.place(x=110, y=100)
 
         self.table = Table(
             self.window,
             ["Id", "TransactType", "PaymentType", "DateTime", "Customer", "TotalAmount", "Employee", "Description"],
-            [40,80,80,100,130,80,130,160],
-            270,20,
+            [40, 80, 80, 100, 130, 80, 130, 160],
+            270, 20,
             18,
             self.select_from_table
         )
@@ -41,9 +63,9 @@ class PaymentView:
 
     def save_click(self):
         status, message = PaymentController.save(self.transaction_type.get(), self.payment_type.get(),
-                                                       self.date_time.get(), self.customer_id.get(),
-                                                       self.total_amount.get(), self.employee_id.get(),
-                                                       self.description.get())
+                                                 self.date_time.get(), self.customer_id.get(),
+                                                 self.total_amount.get(), self.employee_id.get(),
+                                                 self.description.get())
         if status:
             messagebox.showinfo("Payment Info Save", message)
             self.reset_form()
@@ -51,10 +73,11 @@ class PaymentView:
             messagebox.showerror("Payment Info Save Error", message)
 
     def edit_click(self):
-        status, message = PaymentController.update(self.payment_id.get(), self.transaction_type.get(), self.payment_type.get(),
-                                                         self.date_time.get(), self.customer_id.get(),
-                                                         self.total_amount.get(), self.employee_id.get(),
-                                                         self.description.get())
+        status, message = PaymentController.update(self.payment_id.get(), self.transaction_type.get(),
+                                                   self.payment_type.get(),
+                                                   self.date_time.get(), self.customer_id.get(),
+                                                   self.total_amount.get(), self.employee_id.get(),
+                                                   self.description.get())
         if status:
             messagebox.showinfo("Payment Info Update", message)
             self.reset_form()
@@ -71,8 +94,8 @@ class PaymentView:
 
     def reset_form(self):
         self.payment_id.clear()
-        self.transaction_type.clear()
-        self.payment_type.clear()
+        self.transaction_type.set("income")
+        self.payment_type.set("card")
         self.date_time.clear()
         self.customer_id.clear()
         self.total_amount.clear()
@@ -81,8 +104,8 @@ class PaymentView:
         status, payment_list = PaymentController.find_all()
         self.table.refresh_table(payment_list)
 
-    def select_from_table(self,selected_payment):
-       
+    def select_from_table(self, selected_payment):
+
         if selected_payment:
             status, payment = PaymentController.find_by_id(selected_payment[0])
             if status:

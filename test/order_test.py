@@ -38,7 +38,8 @@ class TestOrderController(unittest.TestCase):
             status_all, order_list = self.controller.find_all()
             if order_list:
                 order_id = order_list[-1].order_id
-                status, message = self.controller.update(order_id, "updated", 2, 2, "2024/01/04", 3, 3, 160000, 8000, 152000)
+                status, message = self.controller.update(order_id, "updated", 2, 2, "2024/01/04", 3, 3, 160000, 8000,
+                                                         152000)
                 self.assertTrue(status)
 
     def test_delete_order(self):

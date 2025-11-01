@@ -14,7 +14,7 @@ class OrderItemRepository:
     def save(self, order_item):
         self.connect()
         self.cursor.execute("insert into order_items (order_id, product_id , quantity,"
-                            " price, discount, description) values (?,?,?,?,?,?)" ,
+                            " price, discount, description) values (?,?,?,?,?,?)",
                             [order_item.order_id, order_item.product_id, order_item.quantity,
                              order_item.price, order_item.discount, order_item.description])
         order_item.id = self.cursor.lastrowid
@@ -24,7 +24,7 @@ class OrderItemRepository:
     def update(self, order_item):
         self.connect()
         self.cursor.execute("update order_items set order_id=?, product_id=?, quantity=?,"
-                            " price=?, discount=?, description=? where id=?" ,
+                            " price=?, discount=?, description=? where id=?",
                             [order_item.order_id, order_item.product_id, order_item.quantity,
                              order_item.price, order_item.discount, order_item.description, order_item.order_item_id])
         self.connection.commit()
@@ -73,4 +73,3 @@ class OrderItemRepository:
         order_item_list = [OrderItem(*order_item) for order_item in self.cursor.fetchall()]
         self.disconnect()
         return order_item_list
-

@@ -1,5 +1,4 @@
 import sqlite3
-
 from model import Product
 
 
@@ -57,7 +56,7 @@ class ProductRepository:
 
     def find_by_name_and_brand(self, name, brand):
         self.connect()
-        self.cursor.execute("select * from products where name like ? and brand like ?", [name+"%", brand+"%"])
+        self.cursor.execute("select * from products where name like ? and brand like ?", [name + "%", brand + "%"])
         product_list = [Product(*product) for product in self.cursor.fetchall()]
         self.disconnect()
         return product_list
@@ -75,5 +74,3 @@ class ProductRepository:
         product_list = [Product(*product) for product in self.cursor.fetchall()]
         self.disconnect()
         return product_list
-
-

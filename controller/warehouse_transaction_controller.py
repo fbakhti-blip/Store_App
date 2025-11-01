@@ -19,9 +19,11 @@ class WarehouseTransactionController:
             return False, e
 
     @classmethod
-    def update(cls, warehouse_transaction_id, product_id, quantity, transaction_type, transaction_datetime, customer_id, employee_id):
+    def update(cls, warehouse_transaction_id, product_id, quantity, transaction_type, transaction_datetime, customer_id,
+               employee_id):
         try:
-            warehouse_transaction = WarehouseTransaction(warehouse_transaction_id, product_id, quantity, transaction_type,
+            warehouse_transaction = WarehouseTransaction(warehouse_transaction_id, product_id, quantity,
+                                                         transaction_type,
                                                          transaction_datetime, customer_id, employee_id)
             warehouse_transaction.validate()
             warehouse_transaction = WarehouseTransactionService.update(warehouse_transaction)
@@ -104,7 +106,8 @@ class WarehouseTransactionController:
     @classmethod
     def find_by_date_time_range(cls, start_date_time, end_date_time):
         try:
-            warehouse_transaction_list = WarehouseTransactionService.find_by_date_time_range(start_date_time, end_date_time)
+            warehouse_transaction_list = WarehouseTransactionService.find_by_date_time_range(start_date_time,
+                                                                                             end_date_time)
             Logger.info(f"WarehouseTransaction FindByDateTimeRange {start_date_time} to {end_date_time}")
             return True, warehouse_transaction_list
         except Exception as e:
@@ -114,8 +117,10 @@ class WarehouseTransactionController:
     @classmethod
     def find_by_date_time_range_and_customer_id(cls, start_date_time, end_date_time, customer_id):
         try:
-            warehouse_transaction_list = WarehouseTransactionService.find_by_date_time_range_and_customer_id(start_date_time, end_date_time, customer_id)
-            Logger.info(f"WarehouseTransaction FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, customer: {customer_id}")
+            warehouse_transaction_list = WarehouseTransactionService.find_by_date_time_range_and_customer_id(
+                start_date_time, end_date_time, customer_id)
+            Logger.info(
+                f"WarehouseTransaction FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, customer: {customer_id}")
             return True, warehouse_transaction_list
         except Exception as e:
             Logger.error(f"WarehouseTransaction FindByDateTimeRangeAndCustomerId Error: {e}")
@@ -124,8 +129,10 @@ class WarehouseTransactionController:
     @classmethod
     def find_by_date_time_range_and_employee_id(cls, start_date_time, end_date_time, employee_id):
         try:
-            warehouse_transaction_list = WarehouseTransactionService.find_by_date_time_range_and_employee_id(start_date_time, end_date_time, employee_id)
-            Logger.info(f"WarehouseTransaction FindByDateTimeRangeAndEmployeeId {start_date_time} to {end_date_time}, employee: {employee_id}")
+            warehouse_transaction_list = WarehouseTransactionService.find_by_date_time_range_and_employee_id(
+                start_date_time, end_date_time, employee_id)
+            Logger.info(
+                f"WarehouseTransaction FindByDateTimeRangeAndEmployeeId {start_date_time} to {end_date_time}, employee: {employee_id}")
             return True, warehouse_transaction_list
         except Exception as e:
             Logger.error(f"WarehouseTransaction FindByDateTimeRangeAndEmployeeId Error: {e}")

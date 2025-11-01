@@ -21,7 +21,8 @@ class PaymentController:
     def update(cls, payment_id, transaction_type, payment_type, date_time, customer_id, total_amount, employee_id,
                description):
         try:
-            payment = Payment(payment_id, transaction_type, payment_type, date_time, customer_id, total_amount, employee_id,
+            payment = Payment(payment_id, transaction_type, payment_type, date_time, customer_id, total_amount,
+                              employee_id,
                               description)
             payment.validate()
             payment = PaymentService.update(payment)
@@ -94,8 +95,10 @@ class PaymentController:
     @classmethod
     def find_by_date_time_range_and_customer_id(cls, start_date_time, end_date_time, customer_id):
         try:
-            payment_list = PaymentService.find_by_date_time_range_and_customer_id(start_date_time, end_date_time, customer_id)
-            Logger.info(f"Payment FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, customer: {customer_id}")
+            payment_list = PaymentService.find_by_date_time_range_and_customer_id(start_date_time, end_date_time,
+                                                                                  customer_id)
+            Logger.info(
+                f"Payment FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, customer: {customer_id}")
             return True, payment_list
         except Exception as e:
             Logger.error(f"Payment FindByDateTimeRangeAndCustomerId Error: {e}")
@@ -104,8 +107,10 @@ class PaymentController:
     @classmethod
     def find_by_date_time_range_and_employee_id(cls, start_date_time, end_date_time, employee_id):
         try:
-            payment_list = PaymentService.find_by_date_time_range_and_employee_id(start_date_time, end_date_time, employee_id)
-            Logger.info(f"Payment FindByDateTimeRangeAndEmployeeId {start_date_time} to {end_date_time}, employee: {employee_id}")
+            payment_list = PaymentService.find_by_date_time_range_and_employee_id(start_date_time, end_date_time,
+                                                                                  employee_id)
+            Logger.info(
+                f"Payment FindByDateTimeRangeAndEmployeeId {start_date_time} to {end_date_time}, employee: {employee_id}")
             return True, payment_list
         except Exception as e:
             Logger.error(f"Payment FindByDateTimeRangeAndEmployeeId Error: {e}")

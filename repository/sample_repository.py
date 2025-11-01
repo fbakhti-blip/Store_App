@@ -1,5 +1,4 @@
 import sqlite3
-
 from model import Sample
 
 
@@ -38,10 +37,9 @@ class SampleRepository:
     def find_all(self):
         self.connect()
         self.cursor.execute("select * from samples")
-        sample_list =  [Sample(*sample) for sample in self.cursor.fetchall()]
+        sample_list = [Sample(*sample) for sample in self.cursor.fetchall()]
         self.disconnect()
         return sample_list
-
 
     def find_by_id(self, sample_id):
         self.connect()
