@@ -1,12 +1,12 @@
 from view import *
 
 
-class ShowOderView:
+class ShowOrderView:
     def __init__(self):
 
         self.window = Tk()
         self.window.title("show_order")
-        self.window.geometry("700x280")
+        self.window.geometry("920x270")
 
         self.order_item = LabelWithEntry(self.window, "OrderItem", 20, 20)
         self.Customer = LabelWithEntry(self.window, "Customer", 20, 60)
@@ -17,12 +17,14 @@ class ShowOderView:
 
         self.table = Table(
             self.window,
-            ["OrderItem"],
-            [375],
-            280, 20
+            ["OrderItem", "Order", "Product", "Quantity", "Price", "Discount", "Description"],
+            [80, 60, 120, 70, 80, 80, 120],
+            280, 20,
+            10,
+            self.select_from_table
         )
 
         self.window.mainloop()
 
-    def select_from_table(self, selected_order):
+    def select_from_table(self, selected_order_item):
         pass

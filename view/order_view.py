@@ -1,8 +1,9 @@
 from view import *
 
-from model import Order
+from model import Order, OrderItem, Session
 from controller import OrderController
-from view.show_order_view import ShowOderView
+from controller import OrderItemController
+from view.show_order_view import ShowOrderView
 
 
 class OrderView:
@@ -106,7 +107,16 @@ class OrderView:
             messagebox.showerror("Order Delete Error", message)
 
     def order_item_view(self):
-        ui = ShowOderView()
+        if self.order_id.get():
+            status, Session.order_items = OrderItemController.find_by_order_id(self.order_id.get())
+            if status:
+                # Session.order_items = (Session.order_items[0])
+                # order_item = OrderItem(*Session.order_items[0].__dict__.values())
+                print(Session.order_items)
+                ui = ShowOrderView()
+                ui.table.refresh_table(Session.order_items)
+        else:
+            messagebox.showerror("Select", "Select Order")
 
     def reset_form(self):
         self.order_id.clear()
