@@ -5,6 +5,8 @@ from tkinter.ttk import Combobox
 
 from PIL import ImageTk, Image
 
+from model import Session
+
 from view.component.label_with_entry import LabelWithEntry
 from view.component.table import Table
 
