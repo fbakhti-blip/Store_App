@@ -6,6 +6,7 @@ from controller import OrderItemController
 
 class OrderItemView:
     def __init__(self):
+
         self.window = Tk()
         self.window.title("Order Item")
         self.window.geometry("950x400")

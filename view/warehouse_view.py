@@ -5,6 +5,7 @@ from controller import WarehouseController
 
 class WarehouseView:
     def __init__(self):
+
         self.window = Tk()
         self.window.geometry("600x310")
         self.window.title("warehouse view")
@@ -25,6 +26,7 @@ class WarehouseView:
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=260)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=260)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=260)
+
         self.reset_form()
         self.window.mainloop()
 

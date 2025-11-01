@@ -5,6 +5,7 @@ from controller import SampleController
 
 class SampleView:
     def __init__(self):
+
         self.window = Tk()
         self.window.geometry("840x320")
         self.window.title("Sample")
@@ -25,6 +26,7 @@ class SampleView:
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=260)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=260)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=260)
+
         self.reset_form()
         self.window.mainloop()
 

@@ -8,6 +8,7 @@ from controller import WarehouseTransactionController
 
 class WarehouseTransactionView:
     def __init__(self):
+
         self.window = Tk()
         self.window.geometry("970x400")
         self.window.title("Warehouse Transaction")

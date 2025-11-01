@@ -3,6 +3,7 @@ from view import *
 
 class ShowOderView:
     def __init__(self):
+
         self.window = Tk()
         self.window.title("show_order")
         self.window.geometry("700x280")

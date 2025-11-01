@@ -6,6 +6,7 @@ from controller import CustomerController
 
 class CustomerView:
     def __init__(self):
+
         self.window = Tk()
         self.window.geometry("800x310")
         self.window.title("Customer")

@@ -9,6 +9,7 @@ from controller import FinancialTransactionController
 
 class FinancialTransactionView:
     def __init__(self):
+
         self.window = Tk()
         self.window.geometry("1150x440")
         self.window.title("Financial Transaction")

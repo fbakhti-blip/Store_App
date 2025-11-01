@@ -5,6 +5,7 @@ from controller import EmployeeController
 
 class EmployeeView:
     def __init__(self):
+
         self.window = Tk()
         self.window.title("Employee")
         self.window.geometry("1060x470")
@@ -45,13 +46,15 @@ class EmployeeView:
                            [40, 100, 100, 70, 90, 100, 100, 100, 60],
                            270, 20,
                            20,
-                           self.select_from_table)
+                           self.select_from_table
+                           )
 
         Button(self.window, text="Select Employee", width=19, command=self.select_employee).place(x=20, y=380)
         Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=380)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=420)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=420)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=420)
+
         self.reset_form()
         self.window.mainloop()
 

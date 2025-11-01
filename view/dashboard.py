@@ -49,12 +49,13 @@ class DashboardView:
         ui = DeliveryView()
 
     def __init__(self):
+
         self.employee = Session.employee
+
         font = ("Arial", 18, "bold")
         width = 24
         background_color = "violet red"
         foreground_color = "white"
-
         y_dist = 60
 
         self.window = Tk()

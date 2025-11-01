@@ -6,6 +6,7 @@ from controller import DeliveryController
 
 class DeliveryView:
     def __init__(self):
+
         self.window = Tk()
         self.window.geometry("850x320")
         self.window.title("Delivery")

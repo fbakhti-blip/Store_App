@@ -8,6 +8,7 @@ from controller import PaymentController
 
 class PaymentView:
     def __init__(self):
+
         self.window = Tk()
         self.window.geometry("1100x450")
         self.window.title("Payment")

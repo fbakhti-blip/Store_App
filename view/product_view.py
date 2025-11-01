@@ -5,6 +5,7 @@ from controller import ProductController
 
 class ProductView:
     def __init__(self):
+
         self.window = Tk()
         self.window.geometry("1000x440")
         self.window.title("Product")
