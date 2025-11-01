@@ -39,4 +39,4 @@ class LoginView:
             messagebox.showerror("Login Error", "Access Denied !!!")
 
 
-ui = LoginView()
+#ui = LoginView()
