@@ -192,3 +192,9 @@ class OrderView:
             self.table.refresh_table(order_list)
         else:
             self.reset_form()
+
+# TODO: Why order_item_view (line 125) doesn't populate the table??
+# TODO: Why date selection in "Start Date" and "End Date" is not repeatable?
+# TODO: Why table is not refreshed after each search?
+# TODO: In "Save" and "Update", How to enter Customer and Employee Name (NOT Id)
+#           and get the Ids automatically?
