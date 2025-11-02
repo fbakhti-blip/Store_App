@@ -2,7 +2,7 @@ import re
 
 
 def quantity_validator(quantity):
-    if not (type(quantity) == int and quantity > 0):
+    if not (isinstance(quantity, int) and quantity > 0):
         raise ValueError("Invalid quantity !!!")
     else:
         return quantity
@@ -16,7 +16,7 @@ def customer_validator(customer):
 
 
 def price_validator(price):
-    if not (type(price) == int or type(price) == float) or price <= 0:
+    if not isinstance(price, (int,float)) or price <= 0:
         raise ValueError("Invalid price !!!")
     else:
         return price
@@ -30,7 +30,7 @@ def discount_validator(discount):
 
 
 def description_validator(description):
-    if not (type(description) == str and re.match(r"^[a-zA-Z\s\d\"\'!?.,:;]{0,30}$", description)):
+    if not (type(description) == str and re.match(r"^[\w\s\"\'!?.,:;-]{0,30}$", description)):
         raise ValueError("Invalid description !!!")
     else:
         return description

@@ -2,20 +2,6 @@ import re
 from datetime import datetime
 
 
-def transaction_type_validator(transaction_type):
-    if not (type(transaction_type) == str and re.match(r"^[a-zA-Z0-9\s]{3,30}$", transaction_type)):
-        raise ValueError("Invalid transaction_type !!!")
-    else:
-        return transaction_type
-
-
-def payment_type_validator(payment_type):
-    if not (type(payment_type) == str and re.match(r"^[a-zA-Z0-9\s]{3,30}$", payment_type)):
-        raise ValueError("Invalid payment_type !!!")
-    else:
-        return payment_type
-
-
 def date_time_validator(date_time):
     # if not (type(date_time) == str and re.match(r"^\d{2}[/-]\d{2}[/-]\d{4}\s\d{2}:\d{2}(:\d{2})$", date_time)):
     if not datetime.strptime(date_time, "%Y/%m/%d"):
@@ -46,7 +32,7 @@ def employee_id_validator(employee_id):
 
 
 def description_validator(description):
-    if not (isinstance(description, str) and re.match(r"^[\w\s.,-]+$", description)):
+    if not (isinstance(description, str) and re.match(r"^[\w\s\"\'!?.,;:-]*$", description)):
         raise ValueError("Invalid description !!!")
     else:
         return description
