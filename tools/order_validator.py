@@ -3,7 +3,7 @@ from persiantools.jdatetime import JalaliDateTime
 
 
 def datetime_validator(date_time):
-    if not JalaliDateTime.strptime(date_time, "%Y-%m-%d %H:%M"):
+    if not datetime.strptime(date_time, "%Y/%m/%d"):
         raise ValueError("Invalid date time format !!!")
     else:
         return date_time

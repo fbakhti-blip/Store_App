@@ -3,6 +3,7 @@ import tkinter.ttk as ttk
 
 
 class Table:
+
     def table_select(self, event):
         row_id = self.table.focus()
         item = self.table.item(row_id)["values"]

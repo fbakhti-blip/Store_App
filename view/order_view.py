@@ -1,4 +1,5 @@
 from view import *
+from tkcalendar import *
 
 from model import Order, OrderItem, Session
 from controller import OrderController
@@ -36,12 +37,27 @@ class OrderView:
 
         self.search_customer_id = LabelWithEntry(self.window, "Customer Id", 280, 20, data_type=IntVar, distance=75,
                                                  on_keypress_function=self.search_by_customer_id)
+
         self.search_employee_id = LabelWithEntry(self.window, "Employee Id", 500, 20, data_type=IntVar, distance=75,
                                                  on_keypress_function=self.search_by_employee_id)
-        self.search_start_date_time = LabelWithEntry(self.window, "Start Date", 720, 20, distance=60,
-                                                     on_keypress_function=self.search_by_date_time_range)
-        self.search_end_date_time = LabelWithEntry(self.window, "End Date", 920, 20, distance=55,
-                                                   on_keypress_function=self.search_by_date_time_range)
+
+        Label(self.window, text="Start Date").place(x=720, y=20)
+        self.search_start_date_time = DateEntry(self.window, width=16, selectmode="day", date_pattern="y/mm/dd")
+        self.search_start_date_time.bind("<<DateEntrySelected>>", self.search_by_date_time_range)
+        self.search_start_date_time.place(x=780, y=20)
+
+        Label(self.window, text="End Date").place(x=920, y=20)
+        self.search_end_date_time = DateEntry(self.window, width=16, selectmode="day", date_pattern="y/mm/dd")
+        self.search_end_date_time.bind("<<DateEntrySelected>>", self.search_by_date_time_range)
+        self.search_end_date_time.place(x=980, y=20)
+
+        # self.search_start_date_time = LabelWithEntry(self.window, "Start Date", 720, 20, distance=60,
+        #                                              on_keypress_function=self.pick_start_date,
+        #                                              on_keypress_function2=self.search_by_date_time_range)
+        #
+        # self.search_end_date_time = LabelWithEntry(self.window, "End Date", 920, 20, distance=55,
+        #                                            on_keypress_function=self.pick_end_date,
+        #                                            on_keypress_function2=self.search_by_date_time_range)
 
         Label(self.window, text="Order Type").place(x=1120, y=20)
         self.search_order_type = Combobox(
@@ -162,7 +178,7 @@ class OrderView:
         else:
             self.reset_form()
 
-    def search_by_date_time_range(self):
+    def search_by_date_time_range(self, event):
         status, order_list = OrderController.find_by_date_time_range(self.search_start_date_time.get(),
                                                                      self.search_end_date_time.get())
         if status and order_list:
