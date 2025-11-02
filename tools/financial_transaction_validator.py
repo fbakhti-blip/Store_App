@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 
 def transaction_type_validator(transaction_type):
@@ -30,8 +31,9 @@ def amount_validator(amount):
 
 
 def date_time_validator(date_time):
-    if not (type(date_time) == str and re.match(r"^\d{2}[/-]\d{2}[/-]\d{4}\s\d{2}:\d{2}(:\d{2})$", date_time)):
-        raise ValueError("Invalid Date Time !!!")
+    # if not (type(date_time) == str and re.match(r"^\d{2}[/-]\d{2}[/-]\d{4}\s\d{2}:\d{2}(:\d{2})$", date_time)):
+    if not datetime.strptime(date_time, "%Y/%m/%d"):
+        raise ValueError("Invalid date time format !!!")
     else:
         return date_time
 

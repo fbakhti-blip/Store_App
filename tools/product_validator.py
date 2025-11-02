@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 
 def name_validator(name):
@@ -44,7 +45,8 @@ def unit_validator(unit):
 
 
 def expiration_date_validator(expiration_date):
-    if not (isinstance(expiration_date, str) and re.match(r"^\d{4}-\d{2}-\d{2}$", expiration_date)):
-        raise ValueError("Invalid expiration_date !!!")
+    # if not (isinstance(expiration_date, str) and re.match(r"^\d{4}-\d{2}-\d{2}$", expiration_date)):
+    if not datetime.strptime(expiration_date, "%Y/%m/%d"):
+        raise ValueError("Invalid date time format !!!")
     else:
         return expiration_date

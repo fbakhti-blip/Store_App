@@ -17,7 +17,7 @@ def quantity_validator(quantity):
 
 
 def datetime_validator(date_time):
-    if datetime.strptime(date_time, "%Y-%m-%d %H:%M"):
+    if datetime.strptime(date_time, "%Y/%m/%d"):
         return date_time
     else:
         raise ValueError('date or time is invalid!!')
