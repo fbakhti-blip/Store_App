@@ -83,8 +83,8 @@
 
 1. **کلون کردن مخزن**
    ```bash
-   git clone https://github.com/yourusername/StoreAppPython.git
-   cd StoreAppPython
+   git clone https://github.com/yourusername/Store_App.git
+   cd Store_App
    ```
 
 2. **نصب وابستگی‌ها** (در صورت وجود)
