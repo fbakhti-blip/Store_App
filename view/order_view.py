@@ -1,10 +1,14 @@
+from view.customer_view import CustomerView
+from view.employee_view import EmployeeView
+from view.payment_view import PaymentView
+from view.warehouse_transaction_view import WarehouseTransactionView
+from view.show_order_view import ShowOrderView
 from view import *
 from tkcalendar import *
 
 from model import Order, OrderItem, Session
 from controller import OrderController
 from controller import OrderItemController
-from view.show_order_view import ShowOrderView
 
 
 class OrderView:
@@ -15,11 +19,16 @@ class OrderView:
         self.window.geometry("1360x535")
 
         self.order_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
-        self.customer_id = LabelWithEntry(self.window, "Customer Id", 20, 60, data_type=IntVar)
-        self.employee_id = LabelWithEntry(self.window, "Employee Id", 20, 100, data_type=IntVar)
+        self.customer_id = LabelWithEntry(self.window, "Customer Id", 20, 60, data_type=IntVar, state="readonly",
+                                          on_keypress_function=lambda: CustomerView())
+        self.employee_id = LabelWithEntry(self.window, "Employee Id", 20, 100, data_type=IntVar, state="readonly",
+                                          on_keypress_function=lambda: EmployeeView())
         self.date_time = LabelWithEntry(self.window, "Date & Time", 20, 140)
-        self.payment_id = LabelWithEntry(self.window, "Payment Id", 20, 180, data_type=IntVar)
-        self.warehouse_transaction_id = LabelWithEntry(self.window, "Ware Trans Id", 20, 225, data_type=IntVar)
+        self.payment_id = LabelWithEntry(self.window, "Payment Id", 20, 180, data_type=IntVar, state="readonly",
+                                         on_keypress_function=lambda: PaymentView())
+        self.warehouse_transaction_id = LabelWithEntry(self.window, "Ware Trans Id", 20, 225, data_type=IntVar,
+                                                       state="readonly",
+                                                       on_keypress_function=lambda: WarehouseTransactionView())
         self.tax = LabelWithEntry(self.window, "Tax", 20, 270, data_type=IntVar)
         self.total_discount = LabelWithEntry(self.window, "Total Discount", 20, 310, data_type=IntVar)
         self.total_amount = LabelWithEntry(self.window, "Total Amount", 20, 350, data_type=IntVar)
@@ -35,12 +44,15 @@ class OrderView:
             state="readonly")
         self.order_type.place(x=110, y=390)
 
+        # Search by Customer
         self.search_customer_id = LabelWithEntry(self.window, "Customer Id", 280, 20, data_type=IntVar, distance=75,
                                                  on_keypress_function=self.search_by_customer_id)
 
+        # Search by Employee
         self.search_employee_id = LabelWithEntry(self.window, "Employee Id", 500, 20, data_type=IntVar, distance=75,
                                                  on_keypress_function=self.search_by_employee_id)
 
+        # Search by Date
         Label(self.window, text="Start Date").place(x=720, y=20)
         self.search_start_date_time = DateEntry(self.window, width=16, selectmode="day", date_pattern="y/mm/dd")
         self.search_start_date_time.bind("<<DateEntrySelected>>", self.search_by_date_time_range)
@@ -59,6 +71,7 @@ class OrderView:
         #                                            on_keypress_function=self.pick_end_date,
         #                                            on_keypress_function2=self.search_by_date_time_range)
 
+        # Search by Order Type
         Label(self.window, text="Order Type").place(x=1120, y=20)
         self.search_order_type = Combobox(
             self.window,
@@ -79,14 +92,11 @@ class OrderView:
             self.select_from_table
         )
 
-        # v_scroll = ttk.Scrollbar(self.window, command=self.table.yview)
-        # self.table.configure(yscrollcommand=v_scroll.set(0.0,0.4))
-        # v_scroll.place(x=1212, y=20, height=445)
-
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=475)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=97, y=475)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=175, y=475)
-        Button(self.window, text="View Order", width=29, command=self.order_item_view).place(x=20, y=435)
+        Button(self.window, text="View Order", width=18, command=self.order_item_view).place(x=20, y=435)
+        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=175, y=435)
 
         self.reset_form()
         self.window.mainloop()
@@ -131,6 +141,8 @@ class OrderView:
                 print(Session.order_items)
                 ui = ShowOrderView()
                 ui.table.refresh_table(Session.order_items)
+            else:
+                messagebox.showerror("Order Item View Error", "No Order Item Found")
         else:
             messagebox.showerror("Select", "Select Order")
 
@@ -192,6 +204,9 @@ class OrderView:
             self.table.refresh_table(order_list)
         else:
             self.reset_form()
+
+    def refresh(self):
+        pass
 
 # TODO: Why order_item_view (line 125) doesn't populate the table??
 # TODO: Why date selection in "Start Date" and "End Date" is not repeatable?
