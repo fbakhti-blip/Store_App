@@ -127,4 +127,4 @@ class PaymentView:
             messagebox.showerror("Select", "Select Payment")
 
     def refresh(self):
-        pass
+        self.reset_form()

@@ -50,3 +50,13 @@ class DeliveryRepository:
         if delivery:
             return Delivery(*delivery)
         return None
+
+    def find_by_firstname_and_lastname(self, first_name, last_name):
+        self.connect()
+        self.cursor.execute("select * from deliveries where first_name like ? and last_name like ?",
+                            [first_name + "%", last_name + "%"])
+        delivery_list = [Delivery(*delivery) for delivery in self.cursor.fetchall()]
+        self.disconnect()
+        if delivery_list:
+            return delivery_list
+        return None

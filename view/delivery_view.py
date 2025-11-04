@@ -17,15 +17,21 @@ class DeliveryView:
         self.address = LabelWithEntry(self.window, "Address", 20, 140)
         self.description = LabelWithEntry(self.window, "Description", 20, 180)
 
+        self.search_first_name = LabelWithEntry(self.window, "First Name", 270, 20, distance=70,
+                                                on_keypress_function=self.search_by_fullname)
+        self.search_last_name = LabelWithEntry(self.window, "Last Name", 480, 20, distance=70,
+                                               on_keypress_function=self.search_by_fullname)
+
         self.table = Table(
             self.window,
             ["Id", "First Name", "Last Name", "Address", "Description"],
             [40, 100, 100, 140, 160],
-            275, 20,
-            12,
+            270, 60,
+            10,
             self.select_from_table
         )
 
+        Button(self.window, text="Refresh", width=30, command=self.refresh).place(x=20, y=220)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=260)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=260)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=260)
@@ -78,3 +84,12 @@ class DeliveryView:
                 self.last_name.set(delivery.last_name)
                 self.address.set(delivery.address)
                 self.description.set(delivery.description)
+
+    def search_by_fullname(self):
+        status, delivery_list = DeliveryController.find_by_firstname_and_lastname(self.search_first_name.get(),
+                                                                                  self.search_last_name.get())
+        if status and delivery_list:
+            self.table.refresh_table(delivery_list)
+
+    def refresh(self):
+        self.reset_form()

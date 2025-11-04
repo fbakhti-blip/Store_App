@@ -7,22 +7,32 @@ class WarehouseView:
     def __init__(self):
 
         self.window = Tk()
-        self.window.geometry("600x310")
+        self.window.geometry("880x310")
         self.window.title("warehouse view")
 
         self.warehouse_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
         self.product_id = LabelWithEntry(self.window, "Product_Id", 20, 60, data_type=IntVar)
         self.quantity = LabelWithEntry(self.window, "Quantity", 20, 100, data_type=IntVar)
 
+        self.search_product_id = LabelWithEntry(self.window, "Product Id", 275, 20, data_type=IntVar, distance=70,
+                                                on_keypress_function=self.search_by_product_id)
+        self.search_quantity_less_than = LabelWithEntry(self.window, "Quantity<?", 480, 20, data_type=IntVar,
+                                                        distance=70,
+                                                        on_keypress_function=self.search_by_quantity_less_than)
+        self.search_quantity_more_than = LabelWithEntry(self.window, "Quantity>?", 680, 20, data_type=IntVar,
+                                                        distance=70,
+                                                        on_keypress_function=self.search_by_quantity_more_than)
+
         self.table = Table(
             self.window,
             ["Id", "Product", "Quantity"],
-            [40, 150, 100],
-            275, 20,
-            12,
+            [60, 300, 225],
+            275, 60,
+            10,
             self.select_from_table
         )
 
+        Button(self.window, text="Refresh", width=30, command=self.refresh).place(x=20, y=220)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=260)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=260)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=260)
@@ -70,3 +80,27 @@ class WarehouseView:
                 self.warehouse_id.set(warehouse.warehouse_id)
                 self.product_id.set(warehouse.product_id)
                 self.quantity.set(warehouse.quantity)
+
+    def search_by_product_id(self):
+        status, warehouse_list = WarehouseController.find_by_product_id(self.search_product_id.get())
+        if status and warehouse_list:
+            self.table.refresh_table(warehouse_list)
+        else:
+            self.reset_form()
+
+    def search_by_quantity_less_than(self):
+        status, warehouse_list = WarehouseController.find_by_quantity_less_than(self.search_quantity_less_than.get())
+        if status and warehouse_list:
+            self.table.refresh_table(warehouse_list)
+        else:
+            self.reset_form()
+
+    def search_by_quantity_more_than(self):
+        status, warehouse_list = WarehouseController.find_by_quantity_more_than(self.search_quantity_more_than.get())
+        if status and warehouse_list:
+            self.table.refresh_table(warehouse_list)
+        else:
+            self.reset_form()
+
+    def refresh(self):
+        self.reset_form()

@@ -58,3 +58,13 @@ class DeliveryController:
         except Exception as e:
             Logger.error(f"{e} With Id {delivery_id}")
             return False, e
+
+    @classmethod
+    def find_by_firstname_and_lastname(cls, first_name, last_name):
+        try:
+            delivery_list = DeliveryService.find_by_firstname_and_lastname(first_name, last_name)
+            Logger.info(f"Delivery FindByName {first_name} {last_name}")
+            return True, delivery_list
+        except Exception as e:
+            Logger.error(f"{e} With Name {first_name} {last_name}")
+            return False, e

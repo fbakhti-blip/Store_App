@@ -36,3 +36,11 @@ class DeliveryService:
             return delivery
         else:
             raise Exception("Delivery Not Found !!!")
+
+    @classmethod
+    def find_by_firstname_and_lastname(cls, first_name, last_name):
+        delivery_list = cls.delivery_repository.find_by_firstname_and_lastname(first_name, last_name)
+        if delivery_list:
+            return delivery_list
+        else:
+            raise Exception("Delivery Not Found !!!")

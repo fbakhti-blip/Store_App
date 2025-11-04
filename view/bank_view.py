@@ -97,4 +97,4 @@ class BankView:
             messagebox.showerror("Select", "Select Bank")
 
     def refresh(self):
-        pass
+        self.reset_form()

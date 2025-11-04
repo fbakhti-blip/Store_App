@@ -88,4 +88,4 @@ class CustomerView:
             messagebox.showerror("Select", "Select Customer")
 
     def refresh(self):
-        pass
+        self.reset_form()

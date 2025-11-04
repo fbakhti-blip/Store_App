@@ -124,7 +124,7 @@ class OrderItemView:
             messagebox.showerror("Select", "Select Order Item")
 
     def refresh(self):
-        pass
+        self.reset_form()
 
 # TODO: Refresh Button Function: refresh the table? or refresh the search result?
 # TODO: What to do with saved order item in Session?

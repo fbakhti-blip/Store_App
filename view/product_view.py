@@ -19,9 +19,9 @@ class ProductView:
         self.unit = LabelWithEntry(self.window, "Unit", 20, 260)
         self.expiration_date = LabelWithEntry(self.window, "ExpirationDate", 20, 300)
 
-        self.search_name = LabelWithEntry(self.window, "Name", 270, 20, distance=60,
+        self.search_name = LabelWithEntry(self.window, "Name", 270, 20, distance=40,
                                           on_keypress_function=self.search_name_brand)
-        self.search_brand = LabelWithEntry(self.window, "Brand", 500, 20, distance=60,
+        self.search_brand = LabelWithEntry(self.window, "Brand", 460, 20, distance=40,
                                            on_keypress_function=self.search_name_brand)
 
         self.table = Table(
@@ -108,4 +108,4 @@ class ProductView:
             messagebox.showerror("Select", "Select Product")
 
     def refresh(self):
-        pass
+        self.reset_form()

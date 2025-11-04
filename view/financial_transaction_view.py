@@ -117,4 +117,4 @@ class FinancialTransactionView:
             messagebox.showerror("Select", "Select Financial Transaction")
 
     def refresh(self):
-        pass
+        self.reset_form()

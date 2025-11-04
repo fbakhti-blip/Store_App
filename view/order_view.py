@@ -136,7 +136,6 @@ class OrderView:
         if self.order_id.get():
             status, Session.order_items = OrderItemController.find_by_order_id(self.order_id.get())
             if status:
-                # Session.order_items = (Session.order_items[0])
                 # order_item = OrderItem(*Session.order_items[0].__dict__.values())
                 print(Session.order_items)
                 ui = ShowOrderView()
@@ -206,9 +205,9 @@ class OrderView:
             self.reset_form()
 
     def refresh(self):
-        pass
+        self.reset_form()
 
-# TODO: Why order_item_view (line 125) doesn't populate the table??
+# TODO: Why order_item_view (line 135) doesn't populate the table??
 # TODO: Why date selection in "Start Date" and "End Date" is not repeatable?
 # TODO: Why table is not refreshed after each search?
 # TODO: In "Save" and "Update", How to enter Customer and Employee Name (NOT Id)
