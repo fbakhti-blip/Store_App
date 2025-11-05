@@ -66,7 +66,7 @@ class WarehouseTransactionRepository:
             return WarehouseTransaction(*warehouse_transaction)
         return None
 
-    def find_bye_product_id(self, product_id):
+    def find_by_product_id(self, product_id):
         self.connect()
         self.cursor.execute("select * from warehouse_transactions where product_id=?", [product_id])
         warehouse_transaction_list = [WarehouseTransaction(*warehouse_transaction) for warehouse_transaction in

@@ -11,7 +11,6 @@ class Bank:
 
     def validate(self):
         name_validator(self.name)
-        account_validator(self.account)
         balance_validator(self.balance)
         description_validator(self.description)
 

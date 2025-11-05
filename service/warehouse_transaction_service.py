@@ -40,7 +40,7 @@ class WarehouseTransactionService:
 
     @classmethod
     def find_by_product_id(cls, product_id):
-        return cls.warehouse_transaction_repository.find_bye_product_id(product_id)
+        return cls.warehouse_transaction_repository.find_by_product_id(product_id)
 
     @classmethod
     def find_by_transaction_type(cls, transaction_type):

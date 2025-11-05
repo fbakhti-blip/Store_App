@@ -15,7 +15,6 @@ class WarehouseTransaction:
     def validate(self):
         product_id_validator(self.product_id)
         quantity_validator(self.quantity)
-        transaction_type_validator(self.transaction_type)
         datetime_validator(self.transaction_datetime)
         customer_id_validator(self.customer_id)
         employee_id_validator(self.employee_id)

@@ -26,12 +26,24 @@ class BankView:
             state="readonly")
         self.account_name.place(x=110, y=100)
 
+        self.search_name = LabelWithEntry(self.window, "Name", 270, 20, distance=50,
+                                          on_keypress_function=self.search_by_name)
+
+        Label(self.window, text="Account").place(x=530, y=20)
+        self.search_account = Combobox(
+            self.window,
+            values=["", "checking", "saving", "current"],
+            width=17,
+            state="readonly")
+        self.search_account.bind("<<ComboboxSelected>>", self.search_by_account)
+        self.search_account.place(x=595, y=20)
+
         self.table = Table(
             self.window,
             ["Id", "BankName", "AccountName", "Balance", "Description"],
             [40, 100, 100, 60, 150],
-            270, 20,
-            12,
+            270, 60,
+            10,
             self.select_from_table
         )
 
@@ -89,6 +101,16 @@ class BankView:
                 self.account_name.set(bank.account)
                 self.balance.set(bank.balance)
                 self.description.set(bank.description)
+
+    def search_by_name(self):
+        status, bank_list = BankController.find_by_name(self.search_name.get())
+        if status and bank_list:
+            self.table.refresh_table(bank_list)
+
+    def search_by_account(self, event):
+        status, bank_list = BankController.find_by_account(self.search_account.get())
+        if status and bank_list:
+            self.table.refresh_table(bank_list)
 
     def select_bank(self):
         if self.bank_id.get():

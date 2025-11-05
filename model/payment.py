@@ -14,8 +14,6 @@ class Payment:
         self.description = description
 
     def validate(self):
-        transaction_type_validator(self.transaction_type)
-        payment_type_validator(self.payment_type)
         date_time_validator(self.date_time)
         customer_id_validator(self.customer_id)
         total_amount_validator(self.total_amount)

@@ -14,7 +14,6 @@ class FinancialTransaction:
         self.description = description
 
     def validate(self):
-        transaction_type_validator(self.transaction_type)
         customer_id_validator(self.customer_id)
         employee_id_validator(self.employee_id)
         amount_validator(self.amount)

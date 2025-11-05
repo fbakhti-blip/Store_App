@@ -56,14 +56,14 @@ class PaymentRepository:
 
     def find_by_transaction_type(self, transaction_type):
         self.connect()
-        self.cursor.execute("select * from payments where transaction_type=?", [transaction_type + "%"])
+        self.cursor.execute("select * from payments where transaction_type=?", [transaction_type])
         payment_list = [Payment(*payment) for payment in self.cursor.fetchall()]
         self.disconnect()
         return payment_list
 
     def find_by_payment_type(self, payment_type):
         self.connect()
-        self.cursor.execute("select * from payments where payment_type=?", [payment_type + "%"])
+        self.cursor.execute("select * from payments where payment_type=?", [payment_type])
         payment_list = [Payment(*payment) for payment in self.cursor.fetchall()]
         self.disconnect()
         return payment_list

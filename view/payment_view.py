@@ -44,12 +44,30 @@ class PaymentView:
             state="readonly")
         self.payment_type.place(x=110, y=100)
 
+        Label(self.window, text="T-Type").place(x=270, y=20)
+        self.search_transaction_type = Combobox(
+            self.window,
+            values=["", "income", "expense"],
+            width=17,
+            state="readonly")
+        self.search_transaction_type.bind("<<ComboboxSelected>>", self.search_by_transaction_type)
+        self.search_transaction_type.place(x=315, y=20)
+
+        Label(self.window, text="P-Type").place(x=460, y=20)
+        self.search_payment_type = Combobox(
+            self.window,
+            values=["", "card", "cash", "check", "transfer"],
+            width=17,
+            state="readonly")
+        self.search_payment_type.bind("<<ComboboxSelected>>", self.search_by_payment_type)
+        self.search_payment_type.place(x=505, y=20)
+
         self.table = Table(
             self.window,
             ["Id", "TransactType", "PaymentType", "DateTime", "Customer", "TotalAmount", "Employee", "Description"],
             [40, 80, 80, 100, 130, 80, 130, 160],
-            270, 20,
-            18,
+            270, 60,
+            16,
             self.select_from_table
         )
 
@@ -119,6 +137,16 @@ class PaymentView:
                 self.total_amount.set(payment.total_amount)
                 self.employee_id.set(payment.employee_id)
                 self.description.set(payment.description)
+
+    def search_by_transaction_type(self, event):
+        status, payment_list = PaymentController.find_by_transaction_type(self.search_transaction_type.get())
+        if status and payment_list:
+            self.table.refresh_table(payment_list)
+
+    def search_by_payment_type(self, event):
+        status, payment_list = PaymentController.find_by_payment_type(self.search_payment_type.get())
+        if status and payment_list:
+            self.table.refresh_table(payment_list)
 
     def select_payment(self):
         if self.payment_id.get():
