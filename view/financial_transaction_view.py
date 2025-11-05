@@ -37,15 +37,15 @@ class FinancialTransactionView:
         self.transaction_type.place(x=110, y=60)
 
         # Search by Customer
-        self.search_customer_id = LabelWithEntry(self.window, "Customer", 445, 20, data_type=IntVar, distance=60,
+        self.search_customer_id = LabelWithEntry(self.window, "Customer", 435, 20, data_type=IntVar, distance=60,
                                                  on_keypress_function=self.search_by_customer_id)
 
         # Search by Employee
-        self.search_employee_id = LabelWithEntry(self.window, "Employee", 645, 20, data_type=IntVar, distance=60,
+        self.search_employee_id = LabelWithEntry(self.window, "Employee", 635, 20, data_type=IntVar, distance=60,
                                                  on_keypress_function=self.search_by_employee_id)
 
         # Search by Payment
-        self.search_payment_id = LabelWithEntry(self.window, "Payment", 845, 20, data_type=IntVar, distance=60,
+        self.search_payment_id = LabelWithEntry(self.window, "Payment", 835, 20, data_type=IntVar, distance=60,
                                                 on_keypress_function=self.search_by_payment_id)
 
         # Search by Transaction Type
@@ -53,7 +53,7 @@ class FinancialTransactionView:
         self.search_transaction_type = Combobox(
             self.window,
             values=["", "sale", "purchase", "salary", "expense"],
-            width=17,
+            width=15,
             state="readonly")
         self.search_transaction_type.bind("<<ComboboxSelected>>", self.search_by_transaction_type)
         self.search_transaction_type.place(x=305, y=20)
@@ -136,6 +136,8 @@ class FinancialTransactionView:
             self.search_transaction_type.get())
         if status and financial_transaction_list:
             self.table.refresh_table(financial_transaction_list)
+        else:
+            self.reset_form()
 
     def search_by_customer_id(self):
         status, financial_transaction_list = FinancialTransactionController.find_by_customer_id(

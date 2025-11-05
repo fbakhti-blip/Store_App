@@ -10,7 +10,7 @@ class WarehouseTransactionView:
     def __init__(self):
 
         self.window = Tk()
-        self.window.geometry("970x400")
+        self.window.geometry("1040x400")
         self.window.title("Warehouse Transaction")
 
         self.warehouse_transaction_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, distance=100,
@@ -35,12 +35,34 @@ class WarehouseTransactionView:
             state="readonly")
         self.transaction_type.place(x=120, y=140)
 
+        # Search by Customer
+        self.search_customer_id = LabelWithEntry(self.window, "Customer", 435, 20, data_type=IntVar, distance=60,
+                                                 on_keypress_function=self.search_by_customer_id)
+
+        # Search by Employee
+        self.search_employee_id = LabelWithEntry(self.window, "Employee", 635, 20, data_type=IntVar, distance=60,
+                                                 on_keypress_function=self.search_by_employee_id)
+
+        # Search by Product
+        self.search_product_id = LabelWithEntry(self.window, "Product", 835, 20, data_type=IntVar, distance=50,
+                                                on_keypress_function=self.search_by_product_id)
+
+        # Search by Transaction Type
+        Label(self.window, text="Type").place(x=270, y=20)
+        self.search_transaction_type = Combobox(
+            self.window,
+            values=["", "input", "output"],
+            width=15,
+            state="readonly")
+        self.search_transaction_type.bind("<<ComboboxSelected>>", self.search_by_transaction_type)
+        self.search_transaction_type.place(x=305, y=20)
+
         self.table = Table(
             self.window,
             ["Id", "Product_Id", "Quantity", "transaction_type", "transaction_datetime", "customer_id", "employee_id"],
-            [40, 100, 60, 100, 120, 120, 120],
-            275, 20,
-            16,
+            [40, 130, 60, 100, 120, 150, 140],
+            270, 60,
+            14,
             self.select_from_table
         )
 
@@ -108,6 +130,32 @@ class WarehouseTransactionView:
                 self.transaction_datetime.set(warehouse_transaction.transaction_datetime)
                 self.customer_id.set(warehouse_transaction.customer_id)
                 self.employee_id.set(warehouse_transaction.employee_id)
+
+    def search_by_transaction_type(self, event):
+        status, warehouse_transaction_list = WarehouseTransactionController.find_by_transaction_type(
+            self.search_transaction_type.get())
+        if status and warehouse_transaction_list:
+            self.table.refresh_table(warehouse_transaction_list)
+        else:
+            self.reset_form()
+
+    def search_by_customer_id(self):
+        status, warehouse_transaction_list = WarehouseTransactionController.find_by_customer_id(
+            self.search_customer_id.get())
+        if status and warehouse_transaction_list:
+            self.table.refresh_table(warehouse_transaction_list)
+
+    def search_by_employee_id(self):
+        status, warehouse_transaction_list = WarehouseTransactionController.find_by_employee_id(
+            self.search_employee_id.get())
+        if status and warehouse_transaction_list:
+            self.table.refresh_table(warehouse_transaction_list)
+
+    def search_by_product_id(self):
+        status, warehouse_transaction_list = WarehouseTransactionController.find_by_product_id(
+            self.search_employee_id.get())
+        if status and warehouse_transaction_list:
+            self.table.refresh_table(warehouse_transaction_list)
 
     def select_transaction(self):
         if self.warehouse_transaction_id.get():
