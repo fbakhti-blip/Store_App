@@ -96,7 +96,7 @@ class OrderView:
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=97, y=475)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=175, y=475)
         Button(self.window, text="View Order", width=18, command=self.order_item_view).place(x=20, y=435)
-        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=175, y=435)
+        Button(self.window, text="Refresh", width=7, command=self.reset_form).place(x=175, y=435)
 
         self.reset_form()
         self.window.mainloop()
@@ -205,7 +205,7 @@ class OrderView:
             self.reset_form()
 
     def refresh(self):
-        self.reset_form()
+        pass
 
 # TODO: Why order_item_view (line 135) doesn't populate the table??
 # TODO: Why date selection in "Start Date" and "End Date" is not repeatable?

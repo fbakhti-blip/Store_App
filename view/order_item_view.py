@@ -37,7 +37,7 @@ class OrderItemView:
                            )
 
         Button(self.window, text="Select OrderItem", width=19, command=self.select_order_item).place(x=20, y=300)
-        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=300)
+        Button(self.window, text="Refresh", width=7, command=self.reset_form).place(x=180, y=300)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=340)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=340)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=340)
@@ -124,7 +124,7 @@ class OrderItemView:
             messagebox.showerror("Select", "Select Order Item")
 
     def refresh(self):
-        self.reset_form()
+        pass
 
 # TODO: Refresh Button Function: refresh the table? or refresh the search result?
 # TODO: What to do with saved order item in Session?

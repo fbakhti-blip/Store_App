@@ -38,5 +38,4 @@ class LoginView:
         else:
             messagebox.showerror("Login Error", "Access Denied !!!")
 
-
-#ui = LoginView()
+# ui = LoginView()
