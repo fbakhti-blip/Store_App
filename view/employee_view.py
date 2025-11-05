@@ -40,17 +40,32 @@ class EmployeeView:
             state="readonly")
         self.role.place(x=110, y=340)
 
+        self.search_username = LabelWithEntry(self.window, "Username", 270, 20, distance=60,
+                                              on_keypress_function=self.search_by_username)
+
+        self.search_password = LabelWithEntry(self.window, "Password", 470, 20, distance=60,
+                                              on_keypress_function=self.search_by_password)
+
+        Label(self.window, text="Role").place(x=670, y=20)
+        self.search_role = Combobox(
+            self.window,
+            values=["", "cashier", "manager", "sale", "storekeeper"],
+            width=14,
+            state="readonly")
+        self.search_role.bind("<<ComboboxSelected>>", self.search_by_role)
+        self.search_role.place(x=700, y=20)
+
         self.table = Table(self.window,
                            ["Id", "FirstName", "LastName", "Salary", "Occupation", "PhoneNumber", "Username",
                             "Password", "Role"],
                            [40, 100, 100, 70, 90, 100, 100, 100, 60],
-                           270, 20,
-                           20,
+                           270, 60,
+                           18,
                            self.select_from_table
                            )
 
         Button(self.window, text="Select Employee", width=19, command=self.select_employee).place(x=20, y=380)
-        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=380)
+        Button(self.window, text="Refresh", width=7, command=self.reset_form).place(x=180, y=380)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=420)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=420)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=420)
@@ -116,6 +131,24 @@ class EmployeeView:
                 self.password.set(employee.password)
                 self.role.set(employee.role)
 
+    def search_by_username(self):
+        status, employee_list = EmployeeController.find_by_username(self.search_username.get())
+        if status and employee_list:
+            self.table.refresh_table(employee_list)
+
+    def search_by_password(self):
+        status, employee_list = EmployeeController.find_by_username_and_password(self.search_username.get(),
+                                                                                 self.search_password.get())
+        if status and employee_list:
+            self.table.refresh_table(employee_list)
+
+    def search_by_role(self, event):
+        status, employee_list = EmployeeController.find_by_role(self.search_role.get())
+        if status and employee_list:
+            self.table.refresh_table(employee_list)
+        else:
+            self.reset_form()
+
     def select_employee(self):
         if self.employee_id.get():
             status, Session.employee = EmployeeController.find_by_id(self.employee_id.get())
@@ -123,4 +156,4 @@ class EmployeeView:
             messagebox.showerror("Select", "Select Employee")
 
     def refresh(self):
-        self.reset_form()
+        pass

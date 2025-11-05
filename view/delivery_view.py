@@ -1,6 +1,5 @@
 from view import *
-
-from model import Delivery
+from model import Delivery, Session
 from controller import DeliveryController
 
 
@@ -31,7 +30,8 @@ class DeliveryView:
             self.select_from_table
         )
 
-        Button(self.window, text="Refresh", width=30, command=self.refresh).place(x=20, y=220)
+        Button(self.window, text="Select Delivery", width=19, command=self.select_delivery).place(x=20, y=220)
+        Button(self.window, text="Refresh", width=7, command=self.reset_form).place(x=180, y=220)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=260)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=260)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=260)
@@ -91,5 +91,11 @@ class DeliveryView:
         if status and delivery_list:
             self.table.refresh_table(delivery_list)
 
+    def select_delivery(self):
+        if self.delivery_id.get():
+            status, Session.delivery = DeliveryController.find_by_id(self.delivery_id.get())
+        else:
+            messagebox.showerror("Select", "Select Delivery")
+
     def refresh(self):
-        self.reset_form()
+        pass

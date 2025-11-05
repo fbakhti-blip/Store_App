@@ -68,7 +68,7 @@ class FinancialTransactionView:
         )
 
         Button(self.window, text="Select Transaction", width=19, command=self.select_transaction).place(x=20, y=340)
-        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=340)
+        Button(self.window, text="Refresh", width=7, command=self.reset_form).place(x=180, y=340)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=380)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=380)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=380)
@@ -163,4 +163,4 @@ class FinancialTransactionView:
             messagebox.showerror("Select", "Select Financial Transaction")
 
     def refresh(self):
-        self.reset_form()
+        pass

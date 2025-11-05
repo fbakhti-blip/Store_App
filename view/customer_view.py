@@ -1,5 +1,4 @@
 from view import *
-
 from model import Customer, Session
 from controller import CustomerController
 
@@ -27,7 +26,7 @@ class CustomerView:
         )
 
         Button(self.window, text="Select Customer", width=19, command=self.select_customer).place(x=20, y=220)
-        Button(self.window, text="Refresh", width=7, command=self.refresh).place(x=180, y=220)
+        Button(self.window, text="Refresh", width=7, command=self.reset_form).place(x=180, y=220)
         Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=260)
         Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=100, y=260)
         Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=180, y=260)
@@ -88,4 +87,4 @@ class CustomerView:
             messagebox.showerror("Select", "Select Customer")
 
     def refresh(self):
-        self.reset_form()
+        pass
