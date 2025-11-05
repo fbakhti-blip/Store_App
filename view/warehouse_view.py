@@ -8,7 +8,7 @@ class WarehouseView:
     def __init__(self):
 
         self.window = Tk()
-        self.window.geometry("890x310")
+        self.window.geometry("910x310")
         self.window.title("Warehouse View")
 
         self.warehouse_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
@@ -16,19 +16,19 @@ class WarehouseView:
                                          on_keypress_function=lambda: ProductView())
         self.quantity = LabelWithEntry(self.window, "Quantity", 20, 100, data_type=IntVar)
 
-        self.search_product_id = LabelWithEntry(self.window, "Product Id", 275, 20, data_type=IntVar, distance=70,
+        self.search_product_id = LabelWithEntry(self.window, "Product Id", 275, 20, data_type=IntVar, distance=65,
                                                 on_keypress_function=self.search_by_product_id)
         self.search_quantity_less_than = LabelWithEntry(self.window, "Quantity<?", 480, 20, data_type=IntVar,
                                                         distance=70,
                                                         on_keypress_function=self.search_by_quantity_less_than)
-        self.search_quantity_more_than = LabelWithEntry(self.window, "Quantity>?", 680, 20, data_type=IntVar,
+        self.search_quantity_more_than = LabelWithEntry(self.window, "Quantity>?", 690, 20, data_type=IntVar,
                                                         distance=70,
                                                         on_keypress_function=self.search_by_quantity_more_than)
 
         self.table = Table(
             self.window,
             ["Id", "Product", "Quantity"],
-            [60, 300, 225],
+            [60, 320, 225],
             275, 60,
             10,
             self.select_from_table
