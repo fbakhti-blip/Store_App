@@ -8,7 +8,7 @@ class EmployeeView:
 
         self.window = Tk()
         self.window.title("Employee")
-        self.window.geometry("1060x470")
+        self.window.geometry("1090x470")
 
         self.employee_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
         self.first_name = LabelWithEntry(self.window, "FirstName", 20, 60)
@@ -58,7 +58,7 @@ class EmployeeView:
         self.table = Table(self.window,
                            ["Id", "FirstName", "LastName", "Salary", "Occupation", "PhoneNumber", "Username",
                             "Password", "Role"],
-                           [40, 100, 100, 70, 90, 100, 100, 100, 60],
+                           [40, 100, 100, 70, 90, 100, 100, 100, 90],
                            270, 60,
                            18,
                            self.select_from_table

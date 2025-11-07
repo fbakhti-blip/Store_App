@@ -8,7 +8,7 @@ class WarehouseView:
     def __init__(self):
 
         self.window = Tk()
-        self.window.geometry("910x310")
+        self.window.geometry("910x320")
         self.window.title("Warehouse View")
 
         self.warehouse_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
