@@ -90,7 +90,6 @@ class WarehouseView:
                 self.quantity.set(warehouse.quantity)
 
     def search_by_product_id(self):
-        self.search_product_id.clear()
         status, warehouse_list = WarehouseController.find_by_product_id(Session.product.product_id)
         if status and warehouse_list:
             self.search_product_id.set(Session.product.name + " " + Session.product.brand)
