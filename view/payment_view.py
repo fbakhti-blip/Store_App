@@ -82,14 +82,16 @@ class PaymentView:
 
     def save_click(self):
         status, message = PaymentController.save(self.transaction_type.get(), self.payment_type.get(),
-                                                 self.date_time.get(), self.customer_id.get(),
-                                                 self.total_amount.get(), self.employee_id.get(),
+                                                 self.date_time.get(), Session.customer.customer_id,
+                                                 self.total_amount.get(), Session.employee.employee_id,
                                                  self.description.get())
         if status:
             messagebox.showinfo("Payment Info Save", message)
             self.reset_form()
         else:
             messagebox.showerror("Payment Info Save Error", message)
+        Session.customer = None
+        Session.employee = None
 
     def edit_click(self):
         status, message = PaymentController.update(self.payment_id.get(), self.transaction_type.get(),

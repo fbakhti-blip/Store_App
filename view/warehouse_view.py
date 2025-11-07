@@ -12,13 +12,14 @@ class WarehouseView:
         self.window.title("Warehouse View")
 
         self.warehouse_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
-        self.product_id = LabelWithEntry(self.window, "Product_Id", 20, 60, data_type=IntVar, state="readonly",
+        self.product_id = LabelWithEntry(self.window, "Product", 20, 60, data_type=IntVar, state="readonly",
                                          on_keypress_function=lambda: ProductView())
         self.quantity = LabelWithEntry(self.window, "Quantity", 20, 100, data_type=IntVar)
 
         # Search by Product
         self.search_product_id = LabelWithEntry(self.window, "Product Id", 275, 20, data_type=IntVar, distance=65,
-                                                on_keypress_function=self.search_by_product_id)
+                                                on_keypress_function=self.search_by_product_id,
+                                                on_keypress_function2=lambda: ProductView())
         # Search by Quantity Less Than
         self.search_quantity_less_than = LabelWithEntry(self.window, "Quantity<?", 480, 20, data_type=IntVar,
                                                         distance=70,
@@ -47,16 +48,16 @@ class WarehouseView:
         self.window.mainloop()
 
     def save_click(self):
-        status, message = WarehouseController.save(Session.product.__dict__.get("product_id"), self.quantity.get())
+        status, message = WarehouseController.save(Session.product.product_id, self.quantity.get())
         if status:
             messagebox.showinfo("Warehouse Save", message)
             self.reset_form()
         else:
             messagebox.showerror("Warehouse Save Error", message)
+        Session.product = None
 
     def edit_click(self):
-        status, message = WarehouseController.update(self.warehouse_id.get(),
-                                                     Session.product.__dict__.get("product_id"),
+        status, message = WarehouseController.update(self.warehouse_id.get(), self.product_id.get(),
                                                      self.quantity.get())
         if status:
             messagebox.showinfo("Warehouse Update", message)
@@ -89,25 +90,27 @@ class WarehouseView:
                 self.quantity.set(warehouse.quantity)
 
     def search_by_product_id(self):
-        status, warehouse_list = WarehouseController.find_by_product_id(self.search_product_id.get())
+        self.search_product_id.clear()
+        status, warehouse_list = WarehouseController.find_by_product_id(Session.product.product_id)
         if status and warehouse_list:
+            self.search_product_id.set(Session.product.name + " " + Session.product.brand)
             self.table.refresh_table(warehouse_list)
         else:
-            self.reset_form()
+            messagebox.showerror("Search Error", "Item Not Found!")
 
     def search_by_quantity_less_than(self):
         status, warehouse_list = WarehouseController.find_by_quantity_less_than(self.search_quantity_less_than.get())
         if status and warehouse_list:
             self.table.refresh_table(warehouse_list)
         else:
-            self.reset_form()
+            messagebox.showerror("Search Error", "Not Found!")
 
     def search_by_quantity_more_than(self):
         status, warehouse_list = WarehouseController.find_by_quantity_more_than(self.search_quantity_more_than.get())
         if status and warehouse_list:
             self.table.refresh_table(warehouse_list)
         else:
-            self.reset_form()
+            messagebox.showerror("Search Error", "Not Found!")
 
     def select_warehouse_item(self):
         if self.warehouse_id.get():

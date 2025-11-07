@@ -4,18 +4,24 @@ from tkinter import *
 class LabelWithEntry:
 
     def __init__(self, master, label_text, x, y, distance=90, data_type=StringVar, state="normal",
-                 on_keypress_function=None):
+                 on_keypress_function=None, on_keypress_function2=None):
         self.data_type = data_type
         self.variable = data_type(master)
         Label(master, text=label_text).place(x=x, y=y)
         txt = Entry(master, textvariable=self.variable, state=state)
         if on_keypress_function:
             self.on_keypress_function = on_keypress_function
-            txt.bind("<KeyRelease>", self.key_press)
+            txt.bind("<Return>", self.key_press)
+        if on_keypress_function2:
+            self.on_keypress_function2 = on_keypress_function2
+            txt.bind("<KeyPress>", self.key_press2)
         txt.place(x=x + distance, y=y)
 
     def key_press(self, e):
         self.on_keypress_function()
+
+    def key_press2(self, e):
+        self.on_keypress_function2()
 
     def get(self):
         return self.variable.get()
