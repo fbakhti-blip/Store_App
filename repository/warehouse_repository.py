@@ -58,14 +58,14 @@ class WarehouseRepository:
 
     def find_by_quantity_less_than(self, quantity):
         self.connect()
-        self.cursor.execute("select * from warehouses where quantity < ?", [quantity])
+        self.cursor.execute("select * from warehouses where quantity <= ?", [quantity])
         warehouse_list = [Warehouse(*warehouse) for warehouse in self.cursor.fetchall()]
         self.disconnect()
         return warehouse_list
 
     def find_by_quantity_more_than(self, quantity):
         self.connect()
-        self.cursor.execute("select * from warehouses where quantity > ?", [quantity])
+        self.cursor.execute("select * from warehouses where quantity >= ?", [quantity])
         warehouse_list = [Warehouse(*warehouse) for warehouse in self.cursor.fetchall()]
         self.disconnect()
         return warehouse_list
