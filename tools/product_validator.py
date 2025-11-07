@@ -38,7 +38,7 @@ def category_validator(category):
 
 
 def unit_validator(unit):
-    if not (type(unit) == str and re.match(r"^[0-9\s]{1,10}$", unit)):
+    if not (isinstance(unit, str) and re.match(r"^[\w\s]{1,10}$", unit)):
         raise ValueError("Invalid unit !!!")
     else:
         return unit
