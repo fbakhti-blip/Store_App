@@ -10,7 +10,7 @@ class PaymentView:
     def __init__(self):
 
         self.window = Tk()
-        self.window.geometry("1100x450")
+        self.window.geometry("1130x450")
         self.window.title("Payment")
 
         self.payment_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
@@ -65,7 +65,7 @@ class PaymentView:
         self.table = Table(
             self.window,
             ["Id", "TransactType", "PaymentType", "DateTime", "Customer", "TotalAmount", "Employee", "Description"],
-            [40, 80, 80, 100, 130, 80, 130, 160],
+            [40, 80, 80, 100, 130, 80, 130, 190],
             270, 60,
             16,
             self.select_from_table

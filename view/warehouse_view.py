@@ -12,15 +12,18 @@ class WarehouseView:
         self.window.title("Warehouse View")
 
         self.warehouse_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
-        self.product_id = LabelWithEntry(self.window, "Product_Id", 20, 60, data_type=IntVar,
+        self.product_id = LabelWithEntry(self.window, "Product_Id", 20, 60, data_type=IntVar, state="readonly",
                                          on_keypress_function=lambda: ProductView())
         self.quantity = LabelWithEntry(self.window, "Quantity", 20, 100, data_type=IntVar)
 
+        # Search by Product
         self.search_product_id = LabelWithEntry(self.window, "Product Id", 275, 20, data_type=IntVar, distance=65,
                                                 on_keypress_function=self.search_by_product_id)
+        # Search by Quantity Less Than
         self.search_quantity_less_than = LabelWithEntry(self.window, "Quantity<?", 480, 20, data_type=IntVar,
                                                         distance=70,
                                                         on_keypress_function=self.search_by_quantity_less_than)
+        # Search by Quantity More Than
         self.search_quantity_more_than = LabelWithEntry(self.window, "Quantity>?", 690, 20, data_type=IntVar,
                                                         distance=70,
                                                         on_keypress_function=self.search_by_quantity_more_than)
@@ -44,7 +47,7 @@ class WarehouseView:
         self.window.mainloop()
 
     def save_click(self):
-        status, message = WarehouseController.save(self.product_id.get(), self.quantity.get())
+        status, message = WarehouseController.save(Session.product.__dict__.get("product_id"), self.quantity.get())
         if status:
             messagebox.showinfo("Warehouse Save", message)
             self.reset_form()
@@ -52,7 +55,8 @@ class WarehouseView:
             messagebox.showerror("Warehouse Save Error", message)
 
     def edit_click(self):
-        status, message = WarehouseController.update(self.warehouse_id.get(), self.product_id.get(),
+        status, message = WarehouseController.update(self.warehouse_id.get(),
+                                                     Session.product.__dict__.get("product_id"),
                                                      self.quantity.get())
         if status:
             messagebox.showinfo("Warehouse Update", message)

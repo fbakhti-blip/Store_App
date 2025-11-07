@@ -11,21 +11,21 @@ def date_time_validator(date_time):
 
 
 def customer_id_validator(customer_id):
-    if not (type(customer_id) == int and customer_id > 0):
+    if not (isinstance(customer_id, int) and customer_id > 0):
         raise ValueError("Invalid customer_id !!!")
     else:
         return customer_id
 
 
 def total_amount_validator(total_amount):
-    if not (type(total_amount) == int and total_amount > 0):
+    if not (isinstance(total_amount, int) and total_amount > 0):
         raise ValueError("Invalid total_amount !!!")
     else:
         return total_amount
 
 
 def employee_id_validator(employee_id):
-    if not (type(employee_id) == int and employee_id > 0):
+    if not (isinstance(employee_id, int) and employee_id > 0):
         raise ValueError("Invalid employee_id !!!")
     else:
         return employee_id
