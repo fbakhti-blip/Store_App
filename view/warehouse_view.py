@@ -77,6 +77,9 @@ class WarehouseView:
         self.warehouse_id.clear()
         self.product_id.clear()
         self.quantity.clear()
+        self.search_product_id.clear()
+        self.search_quantity_less_than.clear()
+        self.search_quantity_more_than.clear()
         status, warehouse_list = WarehouseController.find_all()
         self.table.refresh_table(warehouse_list)
 
@@ -85,6 +88,7 @@ class WarehouseView:
             status, warehouse = WarehouseController.find_by_id(selected_warehouse[0])
             if status:
                 warehouse = Warehouse(*selected_warehouse)
+                Session.warehouse = warehouse
                 self.warehouse_id.set(warehouse.warehouse_id)
                 self.product_id.set(warehouse.product_id)
                 self.quantity.set(warehouse.quantity)

@@ -88,6 +88,8 @@ class BankView:
         self.account_name.set("checking")
         self.balance.clear()
         self.description.clear()
+        self.search_name.clear()
+        self.search_account.set("")
         status, bank_list = BankController.find_all()
         self.table.refresh_table(bank_list)
 

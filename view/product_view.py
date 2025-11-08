@@ -80,6 +80,8 @@ class ProductView:
         self.serial.clear()
         self.unit.clear()
         self.expiration_date.clear()
+        self.search_name.clear()
+        self.search_brand.clear()
         status, product_list = ProductController.find_all()
         self.table.refresh_table(product_list)
 

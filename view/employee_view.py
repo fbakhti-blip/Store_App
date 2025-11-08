@@ -113,6 +113,9 @@ class EmployeeView:
         self.username.clear()
         self.password.clear()
         self.role.set("cashier")
+        self.search_username.clear()
+        self.search_password.clear()
+        self.search_role.set("")
         status, employee_list = EmployeeController.find_all()
         self.table.refresh_table(employee_list)
 

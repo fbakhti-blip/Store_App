@@ -1,4 +1,5 @@
 from view.order_view import OrderView
+from view.product_view import ProductView
 from view import *
 
 from model import OrderItem, Session
@@ -15,16 +16,19 @@ class OrderItemView:
         self.order_item_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
         self.order_id = LabelWithEntry(self.window, "Order Id", 20, 60, data_type=IntVar, state="readonly",
                                        on_keypress_function=lambda: OrderView())
-        self.product_id = LabelWithEntry(self.window, "Product Id", 20, 100, data_type=IntVar)
+        self.product_id = LabelWithEntry(self.window, "Product", 20, 100, data_type=IntVar, state="readonly",
+                                         on_keypress_function=lambda: ProductView())
         self.quantity = LabelWithEntry(self.window, "Quantity", 20, 140, data_type=IntVar)
         self.price = LabelWithEntry(self.window, "Price", 20, 180, data_type=IntVar)
         self.discount = LabelWithEntry(self.window, "Discount", 20, 220, data_type=IntVar)
         self.description = LabelWithEntry(self.window, "Description", 20, 260)
 
-        self.search_order_id = LabelWithEntry(self.window, "Order Id", 300, 20, data_type=IntVar, distance=60,
-                                              on_keypress_function=self.search_by_order_id)
-        self.search_product_id = LabelWithEntry(self.window, "Product Id", 500, 20, data_type=IntVar, distance=70,
-                                                on_keypress_function=self.search_by_product_id)
+        self.search_order_id = LabelWithEntry(self.window, "Order", 300, 20, data_type=IntVar, distance=60,
+                                              on_keypress_function=self.search_by_order_id,
+                                              on_keypress_function2=lambda: OrderView())
+        self.search_product_id = LabelWithEntry(self.window, "Product", 500, 20, data_type=IntVar, distance=70,
+                                                on_keypress_function=self.search_by_product_id,
+                                                on_keypress_function2=lambda: ProductView())
         self.search_quantity = LabelWithEntry(self.window, "Quantity<?", 710, 20, data_type=IntVar, distance=70,
                                               on_keypress_function=self.search_by_quantity)
 
@@ -46,7 +50,8 @@ class OrderItemView:
         self.window.mainloop()
 
     def save_click(self):
-        status, message = OrderItemController.save(self.order_id.get(), self.product_id.get(), self.quantity.get(),
+        status, message = OrderItemController.save(Session.order.order_id, Session.product.product_id,
+                                                   self.quantity.get(),
                                                    self.price.get(), self.discount.get(), self.description.get())
         if status:
             messagebox.showinfo("Order Item Save", message)
@@ -80,6 +85,9 @@ class OrderItemView:
         self.price.clear()
         self.discount.clear()
         self.description.clear()
+        self.search_order_id.clear()
+        self.search_product_id.clear()
+        self.search_quantity.clear()
         status, order_item_list = OrderItemController.find_all()
         self.table.refresh_table(order_item_list)
 
@@ -97,25 +105,27 @@ class OrderItemView:
                 self.description.set(order_item.description)
 
     def search_by_order_id(self):
-        status, order_item_list = OrderItemController.find_by_order_id(self.search_order_id.get())
+        status, order_item_list = OrderItemController.find_by_order_id(Session.order.order_id)
         if status and order_item_list:
+            self.search_order_id.set(Session.order.order_id)
             self.table.refresh_table(order_item_list)
         else:
-            self.reset_form()
+            messagebox.showerror("Search Error", "Order Not Found!")
 
     def search_by_product_id(self):
-        status, order_item_list = OrderItemController.find_by_product_id(self.search_product_id.get())
+        status, order_item_list = OrderItemController.find_by_product_id(Session.product.product_id)
         if status and order_item_list:
+            self.search_product_id.set(Session.product.name + " " + Session.product.brand)
             self.table.refresh_table(order_item_list)
         else:
-            self.reset_form()
+            messagebox.showerror("Search Error", "Product Not Found!")
 
     def search_by_quantity(self):
         status, order_item_list = OrderItemController.find_by_quantity_less_than(self.search_quantity.get())
         if status and order_item_list:
             self.table.refresh_table(order_item_list)
         else:
-            self.reset_form()
+            messagebox.showerror("Search Error", "Item Not Found!")
 
     def select_order_item(self):
         if self.order_item_id.get():

@@ -16,14 +16,13 @@ class OrderView:
 
         self.window = Tk()
         self.window.title("Order")
-        self.window.geometry("1360x535")
+        self.window.geometry("1360x575")
 
         self.order_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
-        self.customer_id = LabelWithEntry(self.window, "Customer Id", 20, 60, data_type=IntVar, state="readonly",
+        self.customer_id = LabelWithEntry(self.window, "Customer", 20, 60, data_type=IntVar, state="readonly",
                                           on_keypress_function=lambda: CustomerView())
-        self.employee_id = LabelWithEntry(self.window, "Employee Id", 20, 100, data_type=IntVar, state="readonly",
+        self.employee_id = LabelWithEntry(self.window, "Employee", 20, 100, data_type=IntVar, state="readonly",
                                           on_keypress_function=lambda: EmployeeView())
-        self.date_time = LabelWithEntry(self.window, "Date & Time", 20, 140)
         self.payment_id = LabelWithEntry(self.window, "Payment Id", 20, 180, data_type=IntVar, state="readonly",
                                          on_keypress_function=lambda: PaymentView())
         self.warehouse_transaction_id = LabelWithEntry(self.window, "Ware Trans Id", 20, 225, data_type=IntVar,
@@ -32,6 +31,10 @@ class OrderView:
         self.tax = LabelWithEntry(self.window, "Tax", 20, 270, data_type=IntVar)
         self.total_discount = LabelWithEntry(self.window, "Total Discount", 20, 310, data_type=IntVar)
         self.total_amount = LabelWithEntry(self.window, "Total Amount", 20, 350, data_type=IntVar)
+
+        Label(self.window, text="Date & Time").place(x=20, y=140)
+        self.date_time = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
+        self.date_time.place(x=110, y=140)
 
         order_type_list = ["Basket", "Sell", "Buy"]
         type_order = StringVar(value="Basket")
@@ -45,12 +48,14 @@ class OrderView:
         self.order_type.place(x=110, y=390)
 
         # Search by Customer
-        self.search_customer_id = LabelWithEntry(self.window, "Customer Id", 280, 20, data_type=IntVar, distance=75,
-                                                 on_keypress_function=self.search_by_customer_id)
+        self.search_customer_id = LabelWithEntry(self.window, "Customer", 280, 20, data_type=IntVar, distance=75,
+                                                 on_keypress_function=self.search_by_customer_id,
+                                                 on_keypress_function2=lambda: CustomerView())
 
         # Search by Employee
-        self.search_employee_id = LabelWithEntry(self.window, "Employee Id", 500, 20, data_type=IntVar, distance=75,
-                                                 on_keypress_function=self.search_by_employee_id)
+        self.search_employee_id = LabelWithEntry(self.window, "Employee", 500, 20, data_type=IntVar, distance=75,
+                                                 on_keypress_function=self.search_by_employee_id,
+                                                 on_keypress_function2=lambda: EmployeeView())
 
         # Search by Date
         Label(self.window, text="Start Date").place(x=720, y=20)
@@ -88,23 +93,26 @@ class OrderView:
              "Total Discount", "Total Amount"],
             [40, 90, 140, 140, 150, 90, 90, 90, 90, 120],
             280, 60,
-            21,
+            23,
             self.select_from_table
         )
 
-        Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=475)
-        Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=97, y=475)
-        Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=175, y=475)
-        Button(self.window, text="View Order", width=18, command=self.order_item_view).place(x=20, y=435)
-        Button(self.window, text="Refresh", width=7, command=self.reset_form).place(x=175, y=435)
+        Button(self.window, text="Select Order", width=29, command=self.select_order).place(x=20, y=435)
+        Button(self.window, text="Save", width=7, command=self.save_click).place(x=20, y=515)
+        Button(self.window, text="Edit", width=7, command=self.edit_click).place(x=97, y=515)
+        Button(self.window, text="Delete", width=7, command=self.delete_click).place(x=175, y=515)
+        Button(self.window, text="View Order", width=18,
+               command=lambda: [self.order_item_view(), self.select_order()]).place(x=20, y=475)
+        Button(self.window, text="Refresh", width=7, command=self.reset_form).place(x=175, y=475)
 
         self.reset_form()
         self.window.mainloop()
 
     def save_click(self):
-        status, message = OrderController.save(self.order_type.get(), self.customer_id.get(), self.employee_id.get(),
-                                               self.date_time.get(), self.payment_id.get(),
-                                               self.warehouse_transaction_id.get(), self.tax.get(),
+        status, message = OrderController.save(self.order_type.get(), Session.customer.customer_id,
+                                               Session.employee.employee_id,
+                                               self.date_time.get(), Session.payment.payment_id,
+                                               Session.warehouse_transaction.warehouse_transaction_id, self.tax.get(),
                                                self.total_discount.get(), self.total_amount.get())
         if status:
             messagebox.showinfo("Order Save", message)
@@ -138,8 +146,10 @@ class OrderView:
             if status:
                 # order_item = OrderItem(*Session.order_items[0].__dict__.values())
                 print(Session.order_items)
-                ui = ShowOrderView()
-                ui.table.refresh_table(Session.order_items)
+                show_order = ShowOrderView()
+                show_order.table.refresh_table(Session.order_items)
+                show_order.customer_id.set(Session.order.customer_id)
+                show_order.date_time.set(Session.order.date_time.get())
             else:
                 messagebox.showerror("Order Item View Error", "No Order Item Found")
         else:
@@ -149,13 +159,18 @@ class OrderView:
         self.order_id.clear()
         self.customer_id.clear()
         self.employee_id.clear()
-        self.date_time.clear()
+        self.date_time.set_date(None)
         self.payment_id.clear()
         self.warehouse_transaction_id.clear()
         self.tax.clear()
         self.total_discount.clear()
         self.total_amount.clear()
         self.order_type.set("Basket")
+        self.search_customer_id.clear()
+        self.search_employee_id.clear()
+        self.search_start_date_time.set_date(None)
+        self.search_end_date_time.set_date(None)
+        self.search_order_type.set("")
         status, order_list = OrderController.find_all()
         self.table.refresh_table(order_list)
 
@@ -168,7 +183,7 @@ class OrderView:
                 self.order_type.set(order.order_type)
                 self.customer_id.set(order.customer_id)
                 self.employee_id.set(order.employee_id)
-                self.date_time.set(order.date_time)
+                self.date_time.set_date(order.date_time)
                 self.payment_id.set(order.payment_id)
                 self.warehouse_transaction_id.set(order.warehouse_transaction_id)
                 self.tax.set(order.tax)
@@ -176,18 +191,20 @@ class OrderView:
                 self.total_amount.set(order.total_amount)
 
     def search_by_customer_id(self):
-        status, order_list = OrderController.find_by_customer_id(self.search_customer_id.get())
+        status, order_list = OrderController.find_by_customer_id(Session.customer.customer_id)
         if status and order_list:
+            self.search_customer_id.set(Session.customer.full_name())
             self.table.refresh_table(order_list)
         else:
-            self.reset_form()
+            messagebox.showerror("Search Error", "Customer Not Found!")
 
     def search_by_employee_id(self):
-        status, order_list = OrderController.find_by_employee_id(self.search_employee_id.get())
+        status, order_list = OrderController.find_by_employee_id(Session.employee.employee_id)
         if status and order_list:
+            self.search_employee_id.set(Session.employee.full_name())
             self.table.refresh_table(order_list)
         else:
-            self.reset_form()
+            messagebox.showerror("Search Error", "Employee Not Found!")
 
     def search_by_date_time_range(self, event):
         status, order_list = OrderController.find_by_date_time_range(self.search_start_date_time.get(),
@@ -203,6 +220,12 @@ class OrderView:
             self.table.refresh_table(order_list)
         else:
             self.reset_form()
+
+    def select_order(self):
+        if self.order_id.get():
+            status, Session.order = OrderController.find_by_id(self.order_id.get())
+        else:
+            messagebox.showerror("Select", "Select Order")
 
     def refresh(self):
         pass

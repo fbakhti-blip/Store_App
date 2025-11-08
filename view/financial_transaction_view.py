@@ -116,6 +116,10 @@ class FinancialTransactionView:
         self.date_time.clear()
         self.payment_id.clear()
         self.description.clear()
+        self.search_customer_id.clear()
+        self.search_employee_id.clear()
+        self.search_payment_id.clear()
+        self.search_transaction_type.set("")
         status, financial_transaction_list = FinancialTransactionController.find_all()
         self.table.refresh_table(financial_transaction_list)
 

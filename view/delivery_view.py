@@ -71,6 +71,8 @@ class DeliveryView:
         self.last_name.clear()
         self.address.clear()
         self.description.clear()
+        self.search_first_name.clear()
+        self.search_last_name.clear()
         status, delivery_list = DeliveryController.find_all()
         self.table.refresh_table(delivery_list)
 

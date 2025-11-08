@@ -7,6 +7,7 @@ class Session:
     payment = None
     financial_transaction = None
     warehouse = None
+    warehouse_transaction = None
 
     @classmethod
     def add_order_item(cls, order_item):

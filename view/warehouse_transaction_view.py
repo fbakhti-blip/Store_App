@@ -114,6 +114,10 @@ class WarehouseTransactionView:
         self.transaction_datetime.clear()
         self.customer_id.clear()
         self.employee_id.clear()
+        self.search_customer_id.clear()
+        self.search_employee_id.clear()
+        self.search_product_id.clear()
+        self.search_transaction_type.set("")
         status, warehouse_transaction_list = WarehouseTransactionController.find_all()
         self.table.refresh_table(warehouse_transaction_list)
 

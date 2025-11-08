@@ -44,6 +44,7 @@ class PaymentView:
             state="readonly")
         self.payment_type.place(x=110, y=100)
 
+        # Search by Transaction Type
         Label(self.window, text="T-Type").place(x=270, y=20)
         self.search_transaction_type = Combobox(
             self.window,
@@ -53,6 +54,7 @@ class PaymentView:
         self.search_transaction_type.bind("<<ComboboxSelected>>", self.search_by_transaction_type)
         self.search_transaction_type.place(x=315, y=20)
 
+        # Search by Payment Type
         Label(self.window, text="P-Type").place(x=460, y=20)
         self.search_payment_type = Combobox(
             self.window,
@@ -122,6 +124,8 @@ class PaymentView:
         self.total_amount.clear()
         self.employee_id.clear()
         self.description.clear()
+        self.search_transaction_type.set("")
+        self.search_transaction_type.set("")
         status, payment_list = PaymentController.find_all()
         self.table.refresh_table(payment_list)
 
