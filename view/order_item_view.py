@@ -13,20 +13,20 @@ class OrderItemView:
         self.window.title("Order Item")
         self.window.geometry("950x400")
 
-        self.order_item_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
-        self.order_id = LabelWithEntry(self.window, "Order Id", 20, 60, data_type=IntVar, state="readonly",
+        self.order_item_id = LabelWithEntry(self.window, "Id", 20, 20, distance=95, data_type=IntVar, state="readonly")
+        self.order_id = LabelWithEntry(self.window, "Order Id", 20, 60, distance=95, data_type=IntVar, state="readonly",
                                        on_keypress_function=lambda: OrderView())
-        self.product_id = LabelWithEntry(self.window, "Product", 20, 100, data_type=IntVar, state="readonly",
+        self.product_id = LabelWithEntry(self.window, "Product", 20, 100, distance=95, data_type=IntVar, state="readonly",
                                          on_keypress_function=lambda: ProductView())
-        self.quantity = LabelWithEntry(self.window, "Quantity", 20, 140, data_type=IntVar)
-        self.price = LabelWithEntry(self.window, "Price", 20, 180, data_type=IntVar)
-        self.discount = LabelWithEntry(self.window, "Discount", 20, 220, data_type=IntVar)
-        self.description = LabelWithEntry(self.window, "Description", 20, 260)
+        self.quantity = LabelWithEntry(self.window, "Quantity", 20, 140, distance=95, data_type=IntVar)
+        self.price = LabelWithEntry(self.window, "Price", 20, 180, distance=95, data_type=IntVar)
+        self.discount = LabelWithEntry(self.window, "Discount", 20, 220, distance=95, data_type=IntVar)
+        self.description = LabelWithEntry(self.window, "Description", 20, 260, distance=95)
 
-        self.search_order_id = LabelWithEntry(self.window, "Order", 300, 20, data_type=IntVar, distance=60,
+        self.search_order_id = LabelWithEntry(self.window, "Order Id", 300, 20, data_type=IntVar, distance=60,
                                               on_keypress_function=self.search_by_order_id,
                                               on_keypress_function2=lambda: OrderView())
-        self.search_product_id = LabelWithEntry(self.window, "Product", 500, 20, data_type=IntVar, distance=70,
+        self.search_product_id = LabelWithEntry(self.window, "Product", 500, 20, data_type=IntVar, distance=60,
                                                 on_keypress_function=self.search_by_product_id,
                                                 on_keypress_function2=lambda: ProductView())
         self.search_quantity = LabelWithEntry(self.window, "Quantity<?", 710, 20, data_type=IntVar, distance=70,
