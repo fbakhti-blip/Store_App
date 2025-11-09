@@ -4,7 +4,7 @@ from tkinter import *
 class LabelWithEntry:
 
     def __init__(self, master, label_text, x, y, distance=90, data_type=StringVar, state="normal",
-                 on_keypress_function=None, on_keypress_function2=None):
+                 on_keypress_function=None, on_return_function=None):
         self.data_type = data_type
         self.variable = data_type(master)
         Label(master, text=label_text).place(x=x, y=y)
@@ -12,16 +12,16 @@ class LabelWithEntry:
         if on_keypress_function:
             self.on_keypress_function = on_keypress_function
             txt.bind("<KeyPress>", self.key_press)
-        if on_keypress_function2:
-            self.on_keypress_function2 = on_keypress_function2
-            txt.bind("<Return>", self.key_press2)
+        if on_return_function:
+            self.on_return_function = on_return_function
+            txt.bind("<Return>", self.return_key)
         txt.place(x=x + distance, y=y)
 
     def key_press(self, e):
         self.on_keypress_function()
 
-    def key_press2(self, e):
-        self.on_keypress_function2()
+    def return_key(self, e):
+        self.on_return_function()
 
     def get(self):
         return self.variable.get()

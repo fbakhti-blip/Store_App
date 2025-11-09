@@ -19,7 +19,7 @@ class WarehouseView:
         # Search by Product
         self.search_product_id = LabelWithEntry(self.window, "Product Id", 275, 20, data_type=IntVar, distance=65,
                                                 on_keypress_function=lambda: ProductView(),
-                                                on_keypress_function2=self.search_by_product_id)
+                                                on_return_function=self.search_by_product_id)
         # Search by Quantity Less Than
         self.search_quantity_less_than = LabelWithEntry(self.window, "Quantity<?", 480, 20, data_type=IntVar,
                                                         distance=70,

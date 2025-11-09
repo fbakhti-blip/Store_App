@@ -38,17 +38,17 @@ class WarehouseTransactionView:
         # Search by Customer
         self.search_customer_id = LabelWithEntry(self.window, "Customer", 435, 20, data_type=IntVar, distance=60,
                                                  on_keypress_function=lambda: CustomerView(),
-                                                 on_keypress_function2=self.search_by_customer_id)
+                                                 on_return_function=self.search_by_customer_id)
 
         # Search by Employee
         self.search_employee_id = LabelWithEntry(self.window, "Employee", 635, 20, data_type=IntVar, distance=60,
                                                  on_keypress_function=lambda: EmployeeView(),
-                                                 on_keypress_function2=self.search_by_employee_id)
+                                                 on_return_function=self.search_by_employee_id)
 
         # Search by Product
         self.search_product_id = LabelWithEntry(self.window, "Product", 835, 20, data_type=IntVar, distance=50,
                                                 on_keypress_function=lambda: ProductView(),
-                                                on_keypress_function2=self.search_by_product_id)
+                                                on_return_function=self.search_by_product_id)
 
         # Search by Transaction Type
         Label(self.window, text="Type").place(x=270, y=20)

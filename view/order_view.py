@@ -50,12 +50,12 @@ class OrderView:
         # Search by Customer
         self.search_customer_id = LabelWithEntry(self.window, "Customer", 280, 20, data_type=IntVar, distance=75,
                                                  on_keypress_function=lambda: CustomerView(),
-                                                 on_keypress_function2=self.search_by_customer_id)
+                                                 on_return_function=self.search_by_customer_id)
 
         # Search by Employee
         self.search_employee_id = LabelWithEntry(self.window, "Employee", 500, 20, data_type=IntVar, distance=75,
                                                  on_keypress_function=lambda: EmployeeView(),
-                                                 on_keypress_function2=self.search_by_employee_id)
+                                                 on_return_function=self.search_by_employee_id)
 
         # Search by Date
         Label(self.window, text="Start Date").place(x=720, y=20)

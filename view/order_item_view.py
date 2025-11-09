@@ -26,10 +26,10 @@ class OrderItemView:
 
         self.search_order_id = LabelWithEntry(self.window, "Order Id", 300, 20, data_type=IntVar, distance=60,
                                               on_keypress_function=lambda: OrderView(),
-                                              on_keypress_function2=self.search_by_order_id)
+                                              on_return_function=self.search_by_order_id)
         self.search_product_id = LabelWithEntry(self.window, "Product", 500, 20, data_type=IntVar, distance=60,
                                                 on_keypress_function=lambda: ProductView(),
-                                                on_keypress_function2=self.search_by_product_id)
+                                                on_return_function=self.search_by_product_id)
         self.search_quantity = LabelWithEntry(self.window, "Quantity<?", 710, 20, data_type=IntVar, distance=70,
                                               on_keypress_function=self.search_by_quantity)
 
