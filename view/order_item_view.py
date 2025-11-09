@@ -16,7 +16,8 @@ class OrderItemView:
         self.order_item_id = LabelWithEntry(self.window, "Id", 20, 20, distance=95, data_type=IntVar, state="readonly")
         self.order_id = LabelWithEntry(self.window, "Order Id", 20, 60, distance=95, data_type=IntVar, state="readonly",
                                        on_keypress_function=lambda: OrderView())
-        self.product_id = LabelWithEntry(self.window, "Product", 20, 100, distance=95, data_type=IntVar, state="readonly",
+        self.product_id = LabelWithEntry(self.window, "Product", 20, 100, distance=95, data_type=IntVar,
+                                         state="readonly",
                                          on_keypress_function=lambda: ProductView())
         self.quantity = LabelWithEntry(self.window, "Quantity", 20, 140, distance=95, data_type=IntVar)
         self.price = LabelWithEntry(self.window, "Price", 20, 180, distance=95, data_type=IntVar)
@@ -24,11 +25,11 @@ class OrderItemView:
         self.description = LabelWithEntry(self.window, "Description", 20, 260, distance=95)
 
         self.search_order_id = LabelWithEntry(self.window, "Order Id", 300, 20, data_type=IntVar, distance=60,
-                                              on_keypress_function=self.search_by_order_id,
-                                              on_keypress_function2=lambda: OrderView())
+                                              on_keypress_function=lambda: OrderView(),
+                                              on_keypress_function2=self.search_by_order_id)
         self.search_product_id = LabelWithEntry(self.window, "Product", 500, 20, data_type=IntVar, distance=60,
-                                                on_keypress_function=self.search_by_product_id,
-                                                on_keypress_function2=lambda: ProductView())
+                                                on_keypress_function=lambda: ProductView(),
+                                                on_keypress_function2=self.search_by_product_id)
         self.search_quantity = LabelWithEntry(self.window, "Quantity<?", 710, 20, data_type=IntVar, distance=70,
                                               on_keypress_function=self.search_by_quantity)
 
@@ -135,6 +136,3 @@ class OrderItemView:
 
     def refresh(self):
         pass
-
-# TODO: Refresh Button Function: refresh the table? or refresh the search result?
-# TODO: What to do with saved order item in Session?

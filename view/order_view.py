@@ -49,13 +49,13 @@ class OrderView:
 
         # Search by Customer
         self.search_customer_id = LabelWithEntry(self.window, "Customer", 280, 20, data_type=IntVar, distance=75,
-                                                 on_keypress_function=self.search_by_customer_id,
-                                                 on_keypress_function2=lambda: CustomerView())
+                                                 on_keypress_function=lambda: CustomerView(),
+                                                 on_keypress_function2=self.search_by_customer_id)
 
         # Search by Employee
         self.search_employee_id = LabelWithEntry(self.window, "Employee", 500, 20, data_type=IntVar, distance=75,
-                                                 on_keypress_function=self.search_by_employee_id,
-                                                 on_keypress_function2=lambda: EmployeeView())
+                                                 on_keypress_function=lambda: EmployeeView(),
+                                                 on_keypress_function2=self.search_by_employee_id)
 
         # Search by Date
         Label(self.window, text="Start Date").place(x=720, y=20)
@@ -232,6 +232,5 @@ class OrderView:
 
 # TODO: Why order_item_view (line 135) doesn't populate the table??
 # TODO: Why date selection in "Start Date" and "End Date" is not repeatable?
-# TODO: Why table is not refreshed after each search?
-# TODO: In "Save" and "Update", How to enter Customer and Employee Name (NOT Id)
+# TODO: In "Update", How to enter Customer and Employee Name (NOT Id)
 #           and get the Ids automatically?
