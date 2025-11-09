@@ -230,7 +230,7 @@ class OrderView:
     def refresh(self):
         pass
 
-# TODO: Why order_item_view (line 135) doesn't populate the table??
-# TODO: Why date selection in "Start Date" and "End Date" is not repeatable?
-# TODO: In "Update", How to enter Customer and Employee Name (NOT Id)
+# TODO: Why order_item_view (line 143) doesn't populate the table??
+# TODO: After Selecting in Another View, How to show in Selected Entry?
+# TODO: UPDATE Error!! In "Update", How to enter Customer and Employee Name (NOT Id)
 #           and get the Ids automatically?
