@@ -54,7 +54,6 @@ class PaymentService:
         return cls.payment_repository.find_by_date_time_range_and_customer_id(start_date_time, end_date_time,
                                                                               customer_id)
 
-
     @classmethod
     def find_by_date_time_range_and_employee_id(cls, start_date_time, end_date_time, employee_id):
         return cls.payment_repository.find_by_date_time_range_and_employee_id(start_date_time, end_date_time,
