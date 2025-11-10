@@ -60,6 +60,7 @@ class CustomerRepository:
         self.disconnect()
         return customer_list
 
+
     def find_by_phone_number(self, phone_number):
         self.connect()
         self.cursor.execute("select * from customers where phone_number like ? ", [phone_number + "%"])

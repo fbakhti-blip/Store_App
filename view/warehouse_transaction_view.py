@@ -175,5 +175,6 @@ class WarehouseTransactionView:
         else:
             messagebox.showerror("Select", "Select Warehouse Transaction")
 
+
     def refresh(self):
         pass

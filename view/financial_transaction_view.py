@@ -173,5 +173,6 @@ class FinancialTransactionView:
         else:
             messagebox.showerror("Select", "Select Financial Transaction")
 
+
     def refresh(self):
         pass
