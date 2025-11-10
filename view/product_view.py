@@ -1,4 +1,5 @@
 from view import *
+from tkcalendar import *
 from model import Product, Session
 from controller import ProductController
 
@@ -17,7 +18,10 @@ class ProductView:
         self.serial = LabelWithEntry(self.window, "Serial", 20, 180)
         self.category = LabelWithEntry(self.window, "Category", 20, 220)
         self.unit = LabelWithEntry(self.window, "Unit", 20, 260)
-        self.expiration_date = LabelWithEntry(self.window, "ExpirationDate", 20, 300)
+
+        Label(self.window, text="ExpirationDate").place(x=20, y=300)
+        self.expiration_date = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
+        self.expiration_date.place(x=110, y=300)
 
         self.search_name = LabelWithEntry(self.window, "Name", 270, 20, distance=40,
                                           on_keypress_function=self.search_name_brand)
@@ -79,7 +83,7 @@ class ProductView:
         self.category.clear()
         self.serial.clear()
         self.unit.clear()
-        self.expiration_date.clear()
+        self.expiration_date.set_date(None)
         self.search_name.clear()
         self.search_brand.clear()
         status, product_list = ProductController.find_all()
@@ -96,7 +100,7 @@ class ProductView:
             self.category.set(product.category)
             self.unit.set(product.unit)
             self.serial.set(product.serial)
-            self.expiration_date.set(product.expiration_date)
+            self.expiration_date.set_date(product.expiration_date)
 
     def search_name_brand(self):
         status, product_list = ProductController.find_by_name_and_brand(self.search_name.get(), self.search_brand.get())

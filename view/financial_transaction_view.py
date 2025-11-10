@@ -2,6 +2,7 @@ from view.customer_view import CustomerView
 from view.employee_view import EmployeeView
 from view.payment_view import PaymentView
 from view import *
+from tkcalendar import *
 
 from model import FinancialTransaction, Session
 from controller import FinancialTransactionController
@@ -20,10 +21,13 @@ class FinancialTransactionView:
         self.employee_id = LabelWithEntry(self.window, "Employee", 20, 140, state="readonly",
                                           on_keypress_function=lambda: EmployeeView())
         self.amount = LabelWithEntry(self.window, "Amount", 20, 180)
-        self.date_time = LabelWithEntry(self.window, "Date&Time", 20, 220)
         self.payment_id = LabelWithEntry(self.window, "PaymentId", 20, 260, state="readonly",
                                          on_keypress_function=lambda: PaymentView())
         self.description = LabelWithEntry(self.window, "Description", 20, 300)
+
+        Label(self.window, text="Date&Time").place(x=20, y=220)
+        self.date_time = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
+        self.date_time.place(x=110, y=220)
 
         transaction_type_list = ["sale", "purchase", "salary", "expense"]
         type_transaction = StringVar(value="sale")
@@ -113,7 +117,8 @@ class FinancialTransactionView:
         self.customer_id.clear()
         self.employee_id.clear()
         self.amount.clear()
-        self.date_time.clear()
+        self.date_time.set_date(None)
+        self.payment_id.clear()
         self.payment_id.clear()
         self.description.clear()
         self.search_customer_id.clear()
@@ -131,7 +136,7 @@ class FinancialTransactionView:
             self.customer_id.set(financial_transaction.customer_id)
             self.employee_id.set(financial_transaction.employee_id)
             self.amount.set(financial_transaction.amount)
-            self.date_time.set(financial_transaction.date_time)
+            self.date_time.set_date(financial_transaction.date_time)
             self.payment_id.set(financial_transaction.payment_id)
             self.description.set(financial_transaction.description)
 

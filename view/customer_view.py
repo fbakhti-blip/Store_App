@@ -7,7 +7,7 @@ class CustomerView:
     def __init__(self):
 
         self.window = Tk()
-        self.window.geometry("800x310")
+        self.window.geometry("910x310")
         self.window.title("Customer")
 
         self.customer_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
@@ -16,12 +16,21 @@ class CustomerView:
         self.phone_number = LabelWithEntry(self.window, "PhoneNumber", 20, 140)
         self.address = LabelWithEntry(self.window, "Address", 20, 180)
 
+        self.search_first_name = LabelWithEntry(self.window, "First Name", 270, 20, distance=65,
+                                                on_keypress_function=self.search_by_firstname_and_lastname)
+
+        self.search_last_name = LabelWithEntry(self.window, "Last Name", 470, 20, distance=65,
+                                               on_keypress_function=self.search_by_firstname_and_lastname)
+
+        self.search_phone_number = LabelWithEntry(self.window, "Phone Number", 670, 20, distance=90,
+                                                  on_keypress_function=self.search_by_phone_number)
+
         self.table = Table(
             self.window,
             ["Id", "first_name", "last_name", "phone_number", "address"],
-            [40, 100, 100, 100, 160],
-            275, 20,
-            12,
+            [40, 120, 120, 120, 210],
+            270, 60,
+            10,
             self.select_from_table
         )
 
@@ -66,6 +75,9 @@ class CustomerView:
         self.last_name.clear()
         self.phone_number.clear()
         self.address.clear()
+        self.search_first_name.clear()
+        self.search_last_name.clear()
+        self.search_phone_number.clear()
         status, customer_list = CustomerController.find_all()
         self.table.refresh_table(customer_list)
 
@@ -79,6 +91,21 @@ class CustomerView:
                 self.last_name.set(customer.last_name)
                 self.phone_number.set(customer.phone_number)
                 self.address.set(customer.address)
+
+    def search_by_firstname_and_lastname(self):
+        status, customer_list = CustomerController.find_by_firstname_and_lastname(self.search_first_name.get(),
+                                                                                  self.search_last_name.get())
+        if status and customer_list:
+            self.table.refresh_table(customer_list)
+        else:
+            messagebox.showerror("Error", "Customer Not Found")
+
+    def search_by_phone_number(self):
+        status, customer_list = CustomerController.find_by_phone_number(self.search_phone_number.get())
+        if status and customer_list:
+            self.table.refresh_table(customer_list)
+        else:
+            messagebox.showerror("Error", "Phone Number Not Found!")
 
     def select_customer(self):
         if self.customer_id.get():

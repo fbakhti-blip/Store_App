@@ -2,6 +2,7 @@ from view.customer_view import CustomerView
 from view.employee_view import EmployeeView
 from view.product_view import ProductView
 from view import *
+from tkcalendar import *
 from model import WarehouseTransaction, Session
 from controller import WarehouseTransactionController
 
@@ -18,11 +19,14 @@ class WarehouseTransactionView:
         self.product_id = LabelWithEntry(self.window, "Product", 20, 60, distance=100, state="readonly",
                                          on_keypress_function=lambda: ProductView())
         self.quantity = LabelWithEntry(self.window, "Quantity", 20, 100, distance=100)
-        self.transaction_datetime = LabelWithEntry(self.window, "Transaction Date", 20, 180, distance=100)
         self.customer_id = LabelWithEntry(self.window, "Customer", 20, 220, distance=100, state="readonly",
                                           on_keypress_function=lambda: CustomerView())
         self.employee_id = LabelWithEntry(self.window, "Employee", 20, 260, distance=100, state="readonly",
                                           on_keypress_function=lambda: EmployeeView())
+
+        Label(self.window, text="Transaction Date").place(x=20, y=180)
+        self.transaction_datetime = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
+        self.transaction_datetime.place(x=120, y=180)
 
         transaction_type_list = ["input", "output"]
         type_transaction = StringVar(value="input")
@@ -114,7 +118,7 @@ class WarehouseTransactionView:
         self.product_id.clear()
         self.quantity.clear()
         self.transaction_type.set("input")
-        self.transaction_datetime.clear()
+        self.transaction_datetime.set_date(None)
         self.customer_id.clear()
         self.employee_id.clear()
         self.search_customer_id.clear()
@@ -134,7 +138,7 @@ class WarehouseTransactionView:
                 self.product_id.set(warehouse_transaction.product_id)
                 self.quantity.set(warehouse_transaction.quantity)
                 self.transaction_type.set(warehouse_transaction.transaction_type)
-                self.transaction_datetime.set(warehouse_transaction.transaction_datetime)
+                self.transaction_datetime.set_date(warehouse_transaction.transaction_datetime)
                 self.customer_id.set(warehouse_transaction.customer_id)
                 self.employee_id.set(warehouse_transaction.employee_id)
 
