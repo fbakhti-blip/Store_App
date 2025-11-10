@@ -113,6 +113,5 @@ class CustomerView:
         else:
             messagebox.showerror("Select", "Select Customer")
 
-
     def refresh(self):
         pass
