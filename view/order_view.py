@@ -214,6 +214,16 @@ class OrderView:
         else:
             self.reset_form()
 
+    def search_by_date_time_range_and_customer_id(self):
+        status, order_list = OrderController.find_by_date_time_range_and_customer_id(
+            self.search_start_date_time.get(),
+            self.search_end_date_time.get(), Session.customer.customer_id)
+        if status and order_list:
+            self.search_customer_id.set(Session.customer.full_name())
+            self.table.refresh_table(order_list)
+        else:
+            self.reset_form()
+
     def search_by_order_type(self, event):
         status, order_list = OrderController.find_by_order_type(self.search_order_type.get())
         if status and order_list:
@@ -234,3 +244,4 @@ class OrderView:
 # TODO: After Selecting in Another View, How to show in Selected Entry?
 # TODO: UPDATE Error!! In "Update", How to enter Customer and Employee Name (NOT Id)
 #           and get the Ids automatically?
+# TODO: Can we bind two functions to one widget?

@@ -116,7 +116,7 @@ class OrderItemView:
     def search_by_product_id(self):
         status, order_item_list = OrderItemController.find_by_product_id(Session.product.product_id)
         if status and order_item_list:
-            self.search_product_id.set(Session.product.name + " " + Session.product.brand)
+            self.search_product_id.set(Session.product.info())
             self.table.refresh_table(order_item_list)
         else:
             messagebox.showerror("Search Error", "Product Not Found!")

@@ -108,11 +108,15 @@ class BankView:
         status, bank_list = BankController.find_by_name(self.search_name.get())
         if status and bank_list:
             self.table.refresh_table(bank_list)
+        else:
+            messagebox.showerror("Error", "Bank Not Found!")
 
     def search_by_account(self, event):
         status, bank_list = BankController.find_by_account(self.search_account.get())
         if status and bank_list:
             self.table.refresh_table(bank_list)
+        else:
+            self.reset_form()
 
     def select_bank(self):
         if self.bank_id.get():

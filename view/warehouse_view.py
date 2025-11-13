@@ -96,7 +96,7 @@ class WarehouseView:
     def search_by_product_id(self):
         status, warehouse_list = WarehouseController.find_by_product_id(Session.product.product_id)
         if status and warehouse_list:
-            self.search_product_id.set(Session.product.name + " " + Session.product.brand)
+            self.search_product_id.set(Session.product.info())
             self.table.refresh_table(warehouse_list)
         else:
             messagebox.showerror("Search Error", "Item Not Found!")

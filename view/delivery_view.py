@@ -92,6 +92,8 @@ class DeliveryView:
                                                                                   self.search_last_name.get())
         if status and delivery_list:
             self.table.refresh_table(delivery_list)
+        else:
+            messagebox.showerror("Error", "Person Not Found")
 
     def select_delivery(self):
         if self.delivery_id.get():

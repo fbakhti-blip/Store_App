@@ -113,6 +113,8 @@ class ProductView:
         status, product_list = ProductController.find_by_name_and_brand(self.search_name.get(), self.search_brand.get())
         if status and product_list:
             self.table.refresh_table(product_list)
+        else:
+            messagebox.showerror("Error", "Product Not Found")
 
     def search_by_expiry_date(self, event):
         status, product_list = ProductController.find_by_expire_date_until(self.search_expiry_date.get())

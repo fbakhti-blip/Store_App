@@ -150,12 +150,16 @@ class EmployeeView:
         status, employee_list = EmployeeController.find_by_username(self.search_username.get())
         if status and employee_list:
             self.table.refresh_table(employee_list)
+        else:
+            messagebox.showerror("Error", "Username not found")
 
     def search_by_password(self):
         status, employee_list = EmployeeController.find_by_username_and_password(self.search_username.get(),
                                                                                  self.search_password.get())
         if status and employee_list:
             self.table.refresh_table(employee_list)
+        else:
+            messagebox.showerror("Error", "Password not found")
 
     def search_by_firstname_and_lastname(self):
         status, employee_list = EmployeeController.find_by_firstname_and_lastname(self.search_firstname.get(),
