@@ -28,7 +28,7 @@ class ProductView:
         self.search_brand = LabelWithEntry(self.window, "Brand", 450, 20, distance=40,
                                            on_keypress_function=self.search_name_brand)
 
-        # Search by Date
+        # Search by Expiry Date
         Label(self.window, text="Expiry Date").place(x=630, y=20)
         self.search_expiry_date = DateEntry(self.window, width=16, selectmode="day", date_pattern="y/mm/dd")
         self.search_expiry_date.bind("<<DateEntrySelected>>", self.search_by_expiry_date)
