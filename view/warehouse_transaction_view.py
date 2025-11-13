@@ -40,36 +40,47 @@ class WarehouseTransactionView:
         self.transaction_type.place(x=120, y=140)
 
         # Search by Customer
-        self.search_customer_id = LabelWithEntry(self.window, "Customer", 435, 20, data_type=IntVar, distance=60,
+        self.search_customer_id = LabelWithEntry(self.window, "Customer", 270, 20, data_type=IntVar, distance=60,
                                                  on_keypress_function=lambda: CustomerView(),
                                                  on_return_function=self.search_by_customer_id)
 
         # Search by Employee
-        self.search_employee_id = LabelWithEntry(self.window, "Employee", 635, 20, data_type=IntVar, distance=60,
+        self.search_employee_id = LabelWithEntry(self.window, "Employee", 470, 20, data_type=IntVar, distance=60,
                                                  on_keypress_function=lambda: EmployeeView(),
                                                  on_return_function=self.search_by_employee_id)
 
         # Search by Product
-        self.search_product_id = LabelWithEntry(self.window, "Product", 835, 20, data_type=IntVar, distance=50,
+        self.search_product_id = LabelWithEntry(self.window, "Product", 670, 20, data_type=IntVar, distance=50,
                                                 on_keypress_function=lambda: ProductView(),
                                                 on_return_function=self.search_by_product_id)
 
         # Search by Transaction Type
-        Label(self.window, text="Type").place(x=270, y=20)
+        Label(self.window, text="Type").place(x=860, y=20)
         self.search_transaction_type = Combobox(
             self.window,
             values=["", "input", "output"],
-            width=15,
+            width=16,
             state="readonly")
         self.search_transaction_type.bind("<<ComboboxSelected>>", self.search_by_transaction_type)
-        self.search_transaction_type.place(x=305, y=20)
+        self.search_transaction_type.place(x=895, y=20)
+
+        # Search by Date
+        Label(self.window, text="Start Date").place(x=270, y=60)
+        self.search_start_date_time = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
+        self.search_start_date_time.bind("<<DateEntrySelected>>", self.search_by_date_time_range)
+        self.search_start_date_time.place(x=330, y=60)
+
+        Label(self.window, text="End Date").place(x=470, y=60)
+        self.search_end_date_time = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
+        self.search_end_date_time.bind("<<DateEntrySelected>>", self.search_by_date_time_range)
+        self.search_end_date_time.place(x=530, y=60)
 
         self.table = Table(
             self.window,
-            ["Id", "Product_Id", "Quantity", "transaction_type", "transaction_datetime", "customer_id", "employee_id"],
+            ["Id", "Product", "Quantity", "transaction_type", "transaction_datetime", "Customer", "Employee"],
             [40, 130, 60, 100, 120, 150, 140],
-            270, 60,
-            14,
+            270, 100,
+            12,
             self.select_from_table
         )
 
@@ -125,6 +136,8 @@ class WarehouseTransactionView:
         self.search_employee_id.clear()
         self.search_product_id.clear()
         self.search_transaction_type.set("")
+        self.search_start_date_time.set_date(None)
+        self.search_end_date_time.set_date(None)
         status, warehouse_transaction_list = WarehouseTransactionController.find_all()
         self.table.refresh_table(warehouse_transaction_list)
 
@@ -152,21 +165,59 @@ class WarehouseTransactionView:
 
     def search_by_customer_id(self):
         status, warehouse_transaction_list = WarehouseTransactionController.find_by_customer_id(
-            self.search_customer_id.get())
+            Session.customer.customer_id)
         if status and warehouse_transaction_list:
             self.table.refresh_table(warehouse_transaction_list)
+            self.search_customer_id.set(Session.customer.full_name())
+        else:
+            messagebox.showerror("Error", "Customer Not Found")
 
     def search_by_employee_id(self):
         status, warehouse_transaction_list = WarehouseTransactionController.find_by_employee_id(
-            self.search_employee_id.get())
+            Session.employee.employee_id)
         if status and warehouse_transaction_list:
             self.table.refresh_table(warehouse_transaction_list)
+            self.search_employee_id.set(Session.employee.full_name())
+        else:
+            messagebox.showerror("Error", "Employee Not Found")
 
     def search_by_product_id(self):
         status, warehouse_transaction_list = WarehouseTransactionController.find_by_product_id(
-            self.search_employee_id.get())
+            Session.product.product_id)
         if status and warehouse_transaction_list:
             self.table.refresh_table(warehouse_transaction_list)
+            self.search_product_id.set(Session.product.info())
+        else:
+            messagebox.showerror("Error", "Product Not Found")
+
+    def search_by_date_time_range(self, event):
+        status, warehouse_transaction_list = WarehouseTransactionController.find_by_date_time_range(
+            self.search_start_date_time.get(),
+            self.search_end_date_time.get())
+        if status and warehouse_transaction_list:
+            self.table.refresh_table(warehouse_transaction_list)
+        else:
+            self.reset_form()
+
+    def search_by_date_time_range_and_customer_id(self):
+        status, warehouse_transaction_list = WarehouseTransactionController.find_by_date_time_range_and_customer_id(
+            self.search_start_date_time.get(),
+            self.search_end_date_time.get(), Session.customer.customer_id)
+        if status and warehouse_transaction_list:
+            self.table.refresh_table(warehouse_transaction_list)
+            self.search_customer_id.set(Session.customer.full_name())
+        else:
+            self.reset_form()
+
+    def search_by_date_time_range_and_employee_id(self):
+        status, warehouse_transaction_list = WarehouseTransactionController.find_by_date_time_range_and_employee_id(
+            self.search_start_date_time.get(),
+            self.search_end_date_time.get(), Session.employee.employee_id)
+        if status and warehouse_transaction_list:
+            self.table.refresh_table(warehouse_transaction_list)
+            self.search_employee_id.set(Session.employee.full_name())
+        else:
+            self.reset_form()
 
     def select_transaction(self):
         if self.warehouse_transaction_id.get():

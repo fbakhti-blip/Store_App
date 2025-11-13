@@ -56,14 +56,15 @@ class EmployeeRepository:
 
     def find_by_firstname_and_lastname(self, firstname, lastname):
         self.connect()
-        self.cursor.execute("select * from employees where first_name=? and last_name=? ", [firstname, lastname])
+        self.cursor.execute("select * from employees where first_name like ? and last_name like ? ",
+                            [firstname + "%", lastname + "%"])
         employee_list = [Employee(*employee) for employee in self.cursor.fetchall()]
         self.disconnect()
         return employee_list
 
     def find_by_phone_number(self, phone_number):
         self.connect()
-        self.cursor.execute("select * from employees where phone_number=?", [phone_number])
+        self.cursor.execute("select * from employees where phone_number like ?", [phone_number + "%"])
         employee_list = [Employee(*employee) for employee in self.cursor.fetchall()]
         self.disconnect()
         return employee_list

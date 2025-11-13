@@ -70,7 +70,7 @@ class ProductRepository:
 
     def find_by_expire_date_until(self, expire_date):
         self.connect()
-        self.cursor.execute("select * from products where expiration_date=?", [expire_date])
+        self.cursor.execute("select * from products where expiration_date <= ?", [expire_date])
         product_list = [Product(*product) for product in self.cursor.fetchall()]
         self.disconnect()
         return product_list

@@ -25,8 +25,14 @@ class ProductView:
 
         self.search_name = LabelWithEntry(self.window, "Name", 270, 20, distance=40,
                                           on_keypress_function=self.search_name_brand)
-        self.search_brand = LabelWithEntry(self.window, "Brand", 460, 20, distance=40,
+        self.search_brand = LabelWithEntry(self.window, "Brand", 450, 20, distance=40,
                                            on_keypress_function=self.search_name_brand)
+
+        # Search by Date
+        Label(self.window, text="Expiry Date").place(x=630, y=20)
+        self.search_expiry_date = DateEntry(self.window, width=16, selectmode="day", date_pattern="y/mm/dd")
+        self.search_expiry_date.bind("<<DateEntrySelected>>", self.search_by_expiry_date)
+        self.search_expiry_date.place(x=700, y=20)
 
         self.table = Table(
             self.window,
@@ -86,6 +92,7 @@ class ProductView:
         self.expiration_date.set_date(None)
         self.search_name.clear()
         self.search_brand.clear()
+        self.search_expiry_date.set_date(None)
         status, product_list = ProductController.find_all()
         self.table.refresh_table(product_list)
 
@@ -106,6 +113,13 @@ class ProductView:
         status, product_list = ProductController.find_by_name_and_brand(self.search_name.get(), self.search_brand.get())
         if status and product_list:
             self.table.refresh_table(product_list)
+
+    def search_by_expiry_date(self, event):
+        status, product_list = ProductController.find_by_expire_date_until(self.search_expiry_date.get())
+        if status and product_list:
+            self.table.refresh_table(product_list)
+        else:
+            self.reset_form()
 
     def select_product(self):
         if self.product_id.get():

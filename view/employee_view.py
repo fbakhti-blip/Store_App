@@ -46,21 +46,30 @@ class EmployeeView:
         self.search_password = LabelWithEntry(self.window, "Password", 470, 20, distance=60,
                                               on_keypress_function=self.search_by_password)
 
+        self.search_firstname = LabelWithEntry(self.window, "Firstname", 270, 60, distance=60,
+                                               on_keypress_function=self.search_by_firstname_and_lastname)
+
+        self.search_lastname = LabelWithEntry(self.window, "Lastname", 470, 60, distance=60,
+                                              on_keypress_function=self.search_by_firstname_and_lastname)
+
+        self.search_phone_number = LabelWithEntry(self.window, "Phone #", 670, 60, distance=50,
+                                                  on_keypress_function=self.search_by_phone_number)
+
         Label(self.window, text="Role").place(x=670, y=20)
         self.search_role = Combobox(
             self.window,
             values=["", "cashier", "manager", "sale", "storekeeper"],
-            width=14,
+            width=17,
             state="readonly")
         self.search_role.bind("<<ComboboxSelected>>", self.search_by_role)
-        self.search_role.place(x=700, y=20)
+        self.search_role.place(x=720, y=20)
 
         self.table = Table(self.window,
                            ["Id", "FirstName", "LastName", "Salary", "Occupation", "PhoneNumber", "Username",
                             "Password", "Role"],
                            [40, 100, 100, 70, 90, 100, 100, 100, 90],
-                           270, 60,
-                           18,
+                           270, 100,
+                           16,
                            self.select_from_table
                            )
 
@@ -115,6 +124,9 @@ class EmployeeView:
         self.role.set("cashier")
         self.search_username.clear()
         self.search_password.clear()
+        self.search_firstname.clear()
+        self.search_lastname.clear()
+        self.search_phone_number.clear()
         self.search_role.set("")
         status, employee_list = EmployeeController.find_all()
         self.table.refresh_table(employee_list)
@@ -144,6 +156,21 @@ class EmployeeView:
                                                                                  self.search_password.get())
         if status and employee_list:
             self.table.refresh_table(employee_list)
+
+    def search_by_firstname_and_lastname(self):
+        status, employee_list = EmployeeController.find_by_firstname_and_lastname(self.search_firstname.get(),
+                                                                                  self.search_lastname.get())
+        if status and employee_list:
+            self.table.refresh_table(employee_list)
+        else:
+            messagebox.showerror("Error", "Employee Not Found!")
+
+    def search_by_phone_number(self):
+        status, employee_list = EmployeeController.find_by_phone_number(self.search_phone_number.get())
+        if status and employee_list:
+            self.table.refresh_table(employee_list)
+        else:
+            messagebox.showerror("Error", "Phone Number Not Found!")
 
     def search_by_role(self, event):
         status, employee_list = EmployeeController.find_by_role(self.search_role.get())

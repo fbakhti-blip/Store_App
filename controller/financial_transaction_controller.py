@@ -125,3 +125,15 @@ class FinancialTransactionController:
         except Exception as e:
             Logger.error(f"FinancialTransaction FindByDateTimeRangeAndCustomerId Error: {e}")
             return False, e
+
+    @classmethod
+    def find_by_date_time_range_and_employee_id(cls, start_date_time, end_date_time, employee_id):
+        try:
+            financial_transaction_list = FinancialTransactionService.find_by_date_time_range_and_employee_id(
+                start_date_time, end_date_time, employee_id)
+            Logger.info(
+                f"FinancialTransaction FindByDateTimeRangeAndCustomerId {start_date_time} to {end_date_time}, employee: {employee_id}")
+            return True, financial_transaction_list
+        except Exception as e:
+            Logger.error(f"FinancialTransaction FindByDateTimeRangeAndCustomerId Error: {e}")
+            return False, e

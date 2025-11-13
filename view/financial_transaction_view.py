@@ -41,33 +41,47 @@ class FinancialTransactionView:
         self.transaction_type.place(x=110, y=60)
 
         # Search by Customer
-        self.search_customer_id = LabelWithEntry(self.window, "Customer", 435, 20, data_type=IntVar, distance=60,
-                                                 on_keypress_function=self.search_by_customer_id)
+        self.search_customer_id = LabelWithEntry(self.window, "Customer", 270, 20, data_type=IntVar, distance=60,
+                                                 on_keypress_function=lambda: CustomerView(),
+                                                 on_return_function=self.search_by_customer_id)
 
         # Search by Employee
-        self.search_employee_id = LabelWithEntry(self.window, "Employee", 635, 20, data_type=IntVar, distance=60,
-                                                 on_keypress_function=self.search_by_employee_id)
+        self.search_employee_id = LabelWithEntry(self.window, "Employee", 470, 20, data_type=IntVar, distance=60,
+                                                 on_keypress_function=lambda: EmployeeView(),
+                                                 on_return_function=self.search_by_employee_id)
 
         # Search by Payment
-        self.search_payment_id = LabelWithEntry(self.window, "Payment", 835, 20, data_type=IntVar, distance=60,
-                                                on_keypress_function=self.search_by_payment_id)
+        self.search_payment_id = LabelWithEntry(self.window, "Payment", 670, 20, data_type=IntVar, distance=60,
+                                                on_keypress_function=lambda: PaymentView(),
+                                                on_return_function=self.search_by_payment_id)
 
         # Search by Transaction Type
-        Label(self.window, text="Type").place(x=270, y=20)
+        Label(self.window, text="Type").place(x=870, y=20)
         self.search_transaction_type = Combobox(
             self.window,
             values=["", "sale", "purchase", "salary", "expense"],
             width=15,
             state="readonly")
         self.search_transaction_type.bind("<<ComboboxSelected>>", self.search_by_transaction_type)
-        self.search_transaction_type.place(x=305, y=20)
+        self.search_transaction_type.place(x=910, y=20)
+
+        # Search by Date
+        Label(self.window, text="Start Date").place(x=270, y=60)
+        self.search_start_date_time = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
+        self.search_start_date_time.bind("<<DateEntrySelected>>", self.search_by_date_time_range)
+        self.search_start_date_time.place(x=330, y=60)
+
+        Label(self.window, text="End Date").place(x=470, y=60)
+        self.search_end_date_time = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
+        self.search_end_date_time.bind("<<DateEntrySelected>>", self.search_by_date_time_range)
+        self.search_end_date_time.place(x=530, y=60)
 
         self.table = Table(
             self.window,
             ["Id", "Type", "Customer", "Employee", "Amount", "Date&Time", "PaymentId", "Description"],
             [60, 60, 140, 140, 100, 90, 70, 180],
-            270, 60,
-            16,
+            270, 100,
+            14,
             self.select_from_table
         )
 
@@ -125,6 +139,8 @@ class FinancialTransactionView:
         self.search_employee_id.clear()
         self.search_payment_id.clear()
         self.search_transaction_type.set("")
+        self.search_start_date_time.set_date(None)
+        self.search_end_date_time.set_date(None)
         status, financial_transaction_list = FinancialTransactionController.find_all()
         self.table.refresh_table(financial_transaction_list)
 
@@ -150,21 +166,59 @@ class FinancialTransactionView:
 
     def search_by_customer_id(self):
         status, financial_transaction_list = FinancialTransactionController.find_by_customer_id(
-            self.search_customer_id.get())
+            Session.customer.customer_id)
         if status and financial_transaction_list:
             self.table.refresh_table(financial_transaction_list)
+            self.search_customer_id.set(Session.customer.full_name())
+        else:
+            messagebox.showerror("Error", "Customer Not Found")
 
     def search_by_employee_id(self):
         status, financial_transaction_list = FinancialTransactionController.find_by_employee_id(
-            self.search_employee_id.get())
+            Session.employee.employee_id)
         if status and financial_transaction_list:
             self.table.refresh_table(financial_transaction_list)
+            self.search_employee_id.set(Session.employee.full_name())
+        else:
+            messagebox.showerror("Error", "Employee Not Found")
 
     def search_by_payment_id(self):
         status, financial_transaction_list = FinancialTransactionController.find_by_payment_id(
-            self.search_payment_id.get())
+            Session.payment.payment_id)
         if status and financial_transaction_list:
             self.table.refresh_table(financial_transaction_list)
+            self.search_payment_id.set(Session.payment.payment_id)
+        else:
+            messagebox.showerror("Error", "Payment Not Found")
+
+    def search_by_date_time_range(self, event):
+        status, financial_transaction_list = FinancialTransactionController.find_by_date_time_range(
+            self.search_start_date_time.get(),
+            self.search_end_date_time.get())
+        if status and financial_transaction_list:
+            self.table.refresh_table(financial_transaction_list)
+        else:
+            self.reset_form()
+
+    def search_by_date_time_range_and_customer_id(self):
+        status, financial_transaction_list = FinancialTransactionController.find_by_date_time_range_and_customer_id(
+            self.search_start_date_time.get(),
+            self.search_end_date_time.get(), Session.customer.customer_id)
+        if status and financial_transaction_list:
+            self.table.refresh_table(financial_transaction_list)
+            self.search_customer_id.set(Session.customer.full_name())
+        else:
+            self.reset_form()
+
+    def search_by_date_time_range_and_employee_id(self):
+        status, financial_transaction_list = FinancialTransactionController.find_by_date_time_range_and_employee_id(
+            self.search_start_date_time.get(),
+            self.search_end_date_time.get(), Session.employee.employee_id)
+        if status and financial_transaction_list:
+            self.table.refresh_table(financial_transaction_list)
+            self.search_employee_id.set(Session.employee.full_name())
+        else:
+            self.reset_form()
 
     def select_transaction(self):
         if self.financial_transaction_id.get():
