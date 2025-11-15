@@ -59,6 +59,8 @@ class OrderItemView:
             self.reset_form()
         else:
             messagebox.showerror("Order Item Save Error", message)
+        Session.order = None
+        Session.product = None
 
     def edit_click(self):
         status, message = OrderItemController.update(self.order_item_id.get(), self.order_id.get(),
@@ -112,6 +114,7 @@ class OrderItemView:
             self.table.refresh_table(order_item_list)
         else:
             messagebox.showerror("Search Error", "Order Not Found!")
+        Session.order = None
 
     def search_by_product_id(self):
         status, order_item_list = OrderItemController.find_by_product_id(Session.product.product_id)
@@ -120,6 +123,7 @@ class OrderItemView:
             self.table.refresh_table(order_item_list)
         else:
             messagebox.showerror("Search Error", "Product Not Found!")
+        Session.product = None
 
     def search_by_quantity(self):
         status, order_item_list = OrderItemController.find_by_quantity_less_than(self.search_quantity.get())

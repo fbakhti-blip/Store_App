@@ -27,7 +27,7 @@ class CustomerView:
 
         self.table = Table(
             self.window,
-            ["Id", "first_name", "last_name", "phone_number", "address"],
+            ["Id", "First Name", "Last Name", "Phone Number", "Address"],
             [40, 120, 120, 120, 210],
             270, 60,
             10,

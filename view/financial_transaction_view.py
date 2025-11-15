@@ -96,14 +96,18 @@ class FinancialTransactionView:
 
     def save_click(self):
         status, message = FinancialTransactionController.save(self.transaction_type.get(),
-                                                              self.customer_id.get(), self.employee_id.get(),
+                                                              Session.customer.customer_id,
+                                                              Session.employee.employee_id,
                                                               self.amount.get(), self.date_time.get(),
-                                                              self.payment_id.get(), self.description.get())
+                                                              Session.payment.payment_id, self.description.get())
         if status:
             messagebox.showinfo("Financial_Transaction Save", message)
             self.reset_form()
         else:
             messagebox.showerror("Financial_Transaction", message)
+        Session.customer = None
+        Session.employee = None
+        Session.payment = None
 
     def edit_click(self):
         status, message = FinancialTransactionController.update(self.financial_transaction_id.get(),
@@ -172,6 +176,7 @@ class FinancialTransactionView:
             self.search_customer_id.set(Session.customer.full_name())
         else:
             messagebox.showerror("Error", "Customer Not Found")
+        Session.customer = None
 
     def search_by_employee_id(self):
         status, financial_transaction_list = FinancialTransactionController.find_by_employee_id(
@@ -181,6 +186,7 @@ class FinancialTransactionView:
             self.search_employee_id.set(Session.employee.full_name())
         else:
             messagebox.showerror("Error", "Employee Not Found")
+        Session.employee = None
 
     def search_by_payment_id(self):
         status, financial_transaction_list = FinancialTransactionController.find_by_payment_id(
@@ -190,6 +196,7 @@ class FinancialTransactionView:
             self.search_payment_id.set(Session.payment.payment_id)
         else:
             messagebox.showerror("Error", "Payment Not Found")
+        Session.payment = None
 
     def search_by_date_time_range(self, event):
         status, financial_transaction_list = FinancialTransactionController.find_by_date_time_range(
@@ -209,6 +216,7 @@ class FinancialTransactionView:
             self.search_customer_id.set(Session.customer.full_name())
         else:
             self.reset_form()
+        Session.customer = None
 
     def search_by_date_time_range_and_employee_id(self):
         status, financial_transaction_list = FinancialTransactionController.find_by_date_time_range_and_employee_id(
@@ -219,6 +227,7 @@ class FinancialTransactionView:
             self.search_employee_id.set(Session.employee.full_name())
         else:
             self.reset_form()
+        Session.employee = None
 
     def select_transaction(self):
         if self.financial_transaction_id.get():

@@ -94,15 +94,19 @@ class WarehouseTransactionView:
         self.window.mainloop()
 
     def save_click(self):
-        status, message = WarehouseTransactionController.save(self.product_id.get(), self.quantity.get(),
+        status, message = WarehouseTransactionController.save(Session.product.product_id, self.quantity.get(),
                                                               self.transaction_type.get(),
                                                               self.transaction_datetime.get(),
-                                                              self.customer_id.get(), self.employee_id.get())
+                                                              Session.customer.customer_id,
+                                                              Session.employee.employee_id)
         if status:
             messagebox.showinfo("Warehouse_transaction Save", message)
             self.reset_form()
         else:
             messagebox.showerror("Warehouse_transaction Save Error", message)
+        Session.product = None
+        Session.customer = None
+        Session.employee = None
 
     def edit_click(self):
         status, message = WarehouseTransactionController.update(self.warehouse_transaction_id.get(),
@@ -171,6 +175,7 @@ class WarehouseTransactionView:
             self.search_customer_id.set(Session.customer.full_name())
         else:
             messagebox.showerror("Error", "Customer Not Found")
+        Session.customer = None
 
     def search_by_employee_id(self):
         status, warehouse_transaction_list = WarehouseTransactionController.find_by_employee_id(
@@ -180,6 +185,7 @@ class WarehouseTransactionView:
             self.search_employee_id.set(Session.employee.full_name())
         else:
             messagebox.showerror("Error", "Employee Not Found")
+        Session.employee = None
 
     def search_by_product_id(self):
         status, warehouse_transaction_list = WarehouseTransactionController.find_by_product_id(
@@ -189,6 +195,7 @@ class WarehouseTransactionView:
             self.search_product_id.set(Session.product.info())
         else:
             messagebox.showerror("Error", "Product Not Found")
+        Session.product = None
 
     def search_by_date_time_range(self, event):
         status, warehouse_transaction_list = WarehouseTransactionController.find_by_date_time_range(
@@ -208,6 +215,7 @@ class WarehouseTransactionView:
             self.search_customer_id.set(Session.customer.full_name())
         else:
             self.reset_form()
+        Session.customer = None
 
     def search_by_date_time_range_and_employee_id(self):
         status, warehouse_transaction_list = WarehouseTransactionController.find_by_date_time_range_and_employee_id(
@@ -218,6 +226,7 @@ class WarehouseTransactionView:
             self.search_employee_id.set(Session.employee.full_name())
         else:
             self.reset_form()
+        Session.employee = None
 
     def select_transaction(self):
         if self.warehouse_transaction_id.get():

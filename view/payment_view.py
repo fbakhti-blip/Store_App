@@ -204,6 +204,7 @@ class PaymentView:
             self.search_customer_id.set(Session.customer.full_name())
         else:
             self.reset_form()
+        Session.customer = None
 
     def search_by_date_time_range_and_employee_id(self):
         status, payment_list = PaymentController.find_by_date_time_range_and_employee_id(
@@ -214,6 +215,7 @@ class PaymentView:
             self.search_employee_id.set(Session.employee.full_name())
         else:
             self.reset_form()
+        Session.employee = None
 
     def select_payment(self):
         if self.payment_id.get():

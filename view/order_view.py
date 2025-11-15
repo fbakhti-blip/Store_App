@@ -119,6 +119,10 @@ class OrderView:
             self.reset_form()
         else:
             messagebox.showerror("Order Save Error", message)
+        Session.customer = None
+        Session.employee = None
+        Session.payment = None
+        Session.warehouse_transaction = None
 
     def edit_click(self):
         status, message = OrderController.update(self.order_id.get(), self.order_type.get(), self.customer_id.get(),
@@ -197,6 +201,7 @@ class OrderView:
             self.table.refresh_table(order_list)
         else:
             messagebox.showerror("Search Error", "Customer Not Found!")
+        Session.customer = None
 
     def search_by_employee_id(self):
         status, order_list = OrderController.find_by_employee_id(Session.employee.employee_id)
@@ -205,6 +210,7 @@ class OrderView:
             self.table.refresh_table(order_list)
         else:
             messagebox.showerror("Search Error", "Employee Not Found!")
+        Session.employee = None
 
     def search_by_date_time_range(self, event):
         status, order_list = OrderController.find_by_date_time_range(self.search_start_date_time.get(),
@@ -223,6 +229,7 @@ class OrderView:
             self.table.refresh_table(order_list)
         else:
             self.reset_form()
+        Session.customer = None
 
     def search_by_order_type(self, event):
         status, order_list = OrderController.find_by_order_type(self.search_order_type.get())
@@ -240,7 +247,7 @@ class OrderView:
     def refresh(self):
         pass
 
-# TODO: Why order_item_view (line 143) doesn't populate the table??
+# TODO: Why order_item_view (line 147) doesn't populate the table??
 # TODO: After Selecting in Another View, How to show in Selected Entry?
 # TODO: UPDATE Error!! In "Update", How to enter Customer and Employee Name (NOT Id)
 #           and get the Ids automatically?

@@ -19,7 +19,7 @@ class ProductView:
         self.category = LabelWithEntry(self.window, "Category", 20, 220)
         self.unit = LabelWithEntry(self.window, "Unit", 20, 260)
 
-        Label(self.window, text="ExpirationDate").place(x=20, y=300)
+        Label(self.window, text="Expiry Date").place(x=20, y=300)
         self.expiration_date = DateEntry(self.window, width=17, selectmode="day", date_pattern="y/mm/dd")
         self.expiration_date.place(x=110, y=300)
 
@@ -36,7 +36,7 @@ class ProductView:
 
         self.table = Table(
             self.window,
-            ["Id", "Name", "Brand", "Model", "Serial", "Category", "Unit", "ExpirationDate"],
+            ["Id", "Name", "Brand", "Model", "Serial", "Category", "Unit", "Expiry Date"],
             [40, 100, 100, 80, 80, 100, 100, 100],
             270, 60,
             16,

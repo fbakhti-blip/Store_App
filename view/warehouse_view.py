@@ -9,7 +9,7 @@ class WarehouseView:
 
         self.window = Tk()
         self.window.geometry("910x320")
-        self.window.title("Warehouse View")
+        self.window.title("Warehouse")
 
         self.warehouse_id = LabelWithEntry(self.window, "Id", 20, 20, data_type=IntVar, state="readonly")
         self.product_id = LabelWithEntry(self.window, "Product", 20, 60, data_type=IntVar, state="readonly",
@@ -100,6 +100,7 @@ class WarehouseView:
             self.table.refresh_table(warehouse_list)
         else:
             messagebox.showerror("Search Error", "Item Not Found!")
+        Session.product = None
 
     def search_by_quantity_less_than(self):
         status, warehouse_list = WarehouseController.find_by_quantity_less_than(self.search_quantity_less_than.get())
